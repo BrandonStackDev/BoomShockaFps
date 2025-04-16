@@ -76,8 +76,6 @@ int main(void)
         }
     }
 
-    //for (int i = 0; i < l.objCount; i++) {UnloadModel(l.obj[i].model);}//todo: unload level
-
     CloseWindow();
     return 0;
 }

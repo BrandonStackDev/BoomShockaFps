@@ -51,8 +51,6 @@ typedef struct {
     Timer t_endLevel_wait;
 } GameState;
 
-
-
 //functions
 void UpdateGame(GameState *gs, Level *l);
 void DrawGame(GameState *gs, Level *l);

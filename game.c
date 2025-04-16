@@ -158,7 +158,7 @@ void UpdateGame(GameState *gs, Level *l)
     time_t currentTime = time(NULL);
 
     //reset gs timers
-    //handle reset of crouch timer
+    //handle reset of basic timers
     if(HasTimerElapsed(&gs->t_crouch_wait,currentTime))
     {
         ResetTimer(&gs->t_crouch_wait);
