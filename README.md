@@ -31,6 +31,7 @@ In game controls.
 
 In Menu controls,
  - arrow up and down to select
+ - ENTER to select
  - in options D is toggle difficulty and Y is toggle y-inversion
 
 
