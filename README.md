@@ -69,6 +69,7 @@ If you are interested in GameDev and want to get into these tools:
     - reduce wonky-ness
     - just better code in general, possibly shared code for more things if possible
   - variable weather and time of day, at least background colors could change
+  - objects that you can interact with like opening doors, etc...
 
 The main thing that could be improved is my asset collection, some of them are way too big (the yeti is like 8k triangles).
 I did not properly scale down textures that are baked into the glb files as well, and I am still figuring out Blender animation
