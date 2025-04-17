@@ -94,7 +94,9 @@ The main thing that could be improved right now is my asset collection,
 some of them are way too big (the yeti is like 8k triangles).
 I did not properly scale down textures that are baked into the glb files as well, and I am still figuring out Blender animation
 especially in conjunction with Meshy assets.
-  - (if any one knows how to get selected actions to stop going to NLA...seriously, I have tried over and over again and all of my Blender animation projects eventually end up in this endless loop of not being able to play animations from the Action Editor, and they go to NLA, but I delete all the strips from NLA, but then it just goes to NLA again...?). Rigging and assigning weights is still a problem for me, I havnt found exactly the process I like or what works well. 
+  - (if any one knows how to get selected actions to stop going to NLA...seriously, I have tried over and over again and all of my Blender animation projects eventually end up in this endless loop of not being able to play animations from the Action Editor, and they go to NLA, but I delete all the strips from NLA, but then it just goes to NLA again...?). 
+  
+Rigging and assigning weights is still a problem for me, I havnt found exactly the process I like or what works well. 
  
  The yeti has really bad animation. I used a .py script in Blender to auto assign the weights and it worked okay. But I did a bad job correcting the result, so the yeti has limited range of motion off of his bones and as a result I did not create many animations for him and the ones I did are quite crappy. Also the yeti is trouble-some in general. He is super easy if you just shoot at the head, but really hard if you let him make it too you. Shooting him stops him in his tracks which looks odd and there is just many bugs to fix and small tweaks that I need to make. I will probably just deal with the large vertice count and texture size and just do a better job in the future.
  
