@@ -75,7 +75,9 @@ int main(void)
                 break;
         }
     }
-
+    
+    if(l.loaded){UnloadLevel(&l);}
     CloseWindow();
+    
     return 0;
 }
