@@ -62,6 +62,8 @@ If you are interested in GameDev and want to get into these tools:
     - guns
         - also ammo for each gun
     - other
+  - Sounds
+    - it feels empty, needs lots of sound effects
   - more and better enemies
     - better code around managing states and animations
     - yeti needs work
