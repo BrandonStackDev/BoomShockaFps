@@ -27,6 +27,7 @@ In game controls.
   - CTRL to crouch/stand up
   - left mouse click to shoot
     - head shots are better
+    - left and right arrow keys to change weapons
   - ENTER to pause
 
 In Menu controls,
