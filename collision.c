@@ -346,19 +346,6 @@ void HandleObjectCollision(MainCharacter* mc, EnvObject* obj)
     }
 }
 
-// void HandleHitBoxesCollision(MainCharacter* mc, EnvObject* obj)
-// {
-//     if(!obj->useHitBoxes){return;}
-//     for(int i=0; i<obj->hitBoxCount; i++)
-//     {
-//         if(CheckCollisionBoxes(mc->box, obj->hitBoxes[i]))
-//         {
-//             mc->pos.x = mc->oldPos.x;
-//             mc->pos.z = mc->oldPos.z;
-//         }
-//     }
-// }
-
 void HandleHitBoxesCollision(MainCharacter* mc, EnvObject* obj)
 {
     if (!obj->useHitBoxes) return;
@@ -476,7 +463,129 @@ void HandleMcAndBgCollision(MainCharacter* mc, Enemy* bg, GameState *gs)
         mc->box = UpdateBoundingBox(mc->isCrouching?mc->originalCrouchBox:mc->originalBox,mc->pos);
     }
 }
-//todo: does this actually work? with ramps?
+
+static void HandlBgPlatVerticalCollision(Enemy* bg, EnvObject* obj, Level* l, bool *isOnPlatform)
+{
+    int triangleCount = obj->model.meshes[0].triangleCount;
+    float *vertices = obj->model.meshes[0].vertices;
+
+    bool foundGround = false;
+    float bestGroundY = -INFINITY;
+    float wallY = 0.0f;
+
+    for (int i = 0; i < triangleCount; i++) {
+        Vector3 v0 = {
+            vertices[(i * 3 + 0) * 3 + 0],
+            vertices[(i * 3 + 0) * 3 + 1],
+            vertices[(i * 3 + 0) * 3 + 2]
+        };
+        Vector3 v1 = {
+            vertices[(i * 3 + 1) * 3 + 0],
+            vertices[(i * 3 + 1) * 3 + 1],
+            vertices[(i * 3 + 1) * 3 + 2]
+        };
+        Vector3 v2 = {
+            vertices[(i * 3 + 2) * 3 + 0],
+            vertices[(i * 3 + 2) * 3 + 1],
+            vertices[(i * 3 + 2) * 3 + 2]
+        };
+        
+
+        if (!CheckTriangleAABBCollision(v0, v1, v2, bg->box)) 
+        {
+            continue; //no collision
+        }
+
+        Vector3 normal = TriangleNormal(v0, v1, v2);
+        float dotUp = Vector3DotProduct(normal, (Vector3){0, 1, 0});
+        //printf("dotUp: %f\n",dotUp);
+        if (GetTriangleHeightAtPosition(v0, v1, v2, bg->pos.x, bg->pos.z, &wallY)) {
+            if ((bg->oldPos.y >= wallY && bg->pos.y <= wallY) || dotUp > 0.7f) {
+                // Ground
+                if (wallY > bestGroundY && bg->pos.y - wallY < 0.25f) {
+                    foundGround = true;
+                    bestGroundY = wallY;
+                }
+            }
+        }
+    }
+
+    if(foundGround)
+    {
+        if(bg->type==BG_TYPE_YETI && bg->isJumping && !l->mc.isJumping)
+        {
+            if(Vector3Distance(l->mc.pos, bg->pos) < YETI_IMPACT_RADIUS)
+            {
+                l->mc.health-=5;
+                l->mc.isCrouching = true;
+            }
+        }
+        bg->pos.y = bestGroundY + bg->yOffset;
+        bg->yVelocity = 0;
+        bg->isJumping = false;
+        bg->isFalling = false;
+        *isOnPlatform = true;
+    }
+}
+
+//no idea if this works yet
+static bool PointInTriangle2D(Vector2 pt, Vector2 v0, Vector2 v1, Vector2 v2)
+{
+    float dX = pt.x - v2.x;
+    float dY = pt.y - v2.y;
+    float dX21 = v2.x - v1.x;
+    float dY12 = v1.y - v2.y;
+    float D = dY12 * (v0.x - v2.x) + dX21 * (v0.y - v2.y);
+    float s = dY12 * dX + dX21 * dY;
+    float t = (v2.y - v0.y) * dX + (v0.x - v2.x) * dY;
+    if (D < 0) return (s <= 0 && t <= 0 && s + t >= D);
+    return (s >= 0 && t >= 0 && s + t <= D);
+}
+
+//dont know if this works, the idea here is because the soldiers are not stable with the triangle/full-mesh alg
+//for collision detection, I needed a work around to make sure that when the soldier is on an object that is not square
+//he cannot just float in the middle of the air
+static bool IsXZInsideMesh(Vector3 pos, Mesh mesh)
+{
+    int triangleCount = mesh.triangleCount;
+    float *vertices = mesh.vertices;
+
+    Vector2 p = { pos.x, pos.z };
+
+    for (int i = 0; i < triangleCount; i++)
+    {
+        Vector3 v0 = {
+            vertices[(i * 3 + 0) * 3 + 0],
+            vertices[(i * 3 + 0) * 3 + 1],
+            vertices[(i * 3 + 0) * 3 + 2]
+        };
+        Vector3 v1 = {
+            vertices[(i * 3 + 1) * 3 + 0],
+            vertices[(i * 3 + 1) * 3 + 1],
+            vertices[(i * 3 + 1) * 3 + 2]
+        };
+        Vector3 v2 = {
+            vertices[(i * 3 + 2) * 3 + 0],
+            vertices[(i * 3 + 2) * 3 + 1],
+            vertices[(i * 3 + 2) * 3 + 2]
+        };
+
+        // Project to XZ
+        Vector2 a = { v0.x, v0.z };
+        Vector2 b = { v1.x, v1.z };
+        Vector2 c = { v2.x, v2.z };
+
+        if (PointInTriangle2D(p, a, b, c)) {return true;}
+    }
+
+    return false;
+}
+
+//AABB if side collision is detected but will use mesh triangles for vertical collisions
+//this is because I want simple collision from the side with complex objects,
+//but I would like the enemies to not appear to float when a ground object has complex geometry
+// and of course its hacked because the offset of the soldier is not correct and even tho i tried correcting it
+// I couldnt get that to work, its a miracle I stabalized the soldier at all ...
 void HandleBgPlatCollision(Enemy* bg, Level* l)
 {
     BoundingBox playerBox = bg->box;
@@ -511,21 +620,20 @@ void HandleBgPlatCollision(Enemy* bg, Level* l)
 
             if (absY < absX && absY < absZ)
             {
-                //printf("bg plat vertical collision\n");
+                //printf("bg plat vertical collision AABB, running mesh check\n");
                 //bg->pos.y += penY;
-                if(bg->type==BG_TYPE_YETI && bg->isJumping && !l->mc.isJumping)
+                if((bg->type==BG_TYPE_ARMY && IsXZInsideMesh(bg->pos, l->obj[i].model.meshes[0])) || l->obj[i].useHitBoxes)//todo: does this actually work?
                 {
-                    if(Vector3Distance(l->mc.pos, bg->pos) < YETI_IMPACT_RADIUS)
-                    {
-                        l->mc.health-=5;
-                        l->mc.isCrouching = true;
-                    }
+                    bg->pos.y = hitBox.max.y + bg->yOffset;
+                    bg->yVelocity = 0;
+                    bg->isJumping = false;
+                    bg->isFalling = false;
+                    isOnPlatform = true;
                 }
-                bg->pos.y = hitBox.max.y + bg->yOffset;
-                bg->yVelocity = 0;
-                bg->isJumping = false;
-                bg->isFalling = false;
-                isOnPlatform = true;
+                else
+                {
+                    HandlBgPlatVerticalCollision(bg,&l->obj[i],l,&isOnPlatform);
+                }
             }
             else if (absX < absZ)
             {
@@ -547,7 +655,7 @@ void HandleBgPlatCollision(Enemy* bg, Level* l)
     if(!isOnPlatform)
     {
         bg->isFalling = true;
-        if(bg->type==BG_TYPE_ARMY && bg->state==BG_STATE_WALKING)//I have isFalling, but he should never fall off the platform this way
+        if(bg->type==BG_TYPE_ARMY && bg->state==BG_STATE_WALKING)//I have isFalling, but soldiers should never fall off the platform this way
         {
             bg->pos = bg->oldPos;
             bg->state=BG_STATE_SHOOTING;
