@@ -98,6 +98,8 @@ void UpdateLevelSelect(GameState *gs, Level *l) {
             if(l->loaded)
             {
                 printf("Unloading level ...\n");
+                gs->fadeColor.a = 0;
+                gs->deathFadeColor.a = 0;
                 UnloadLevel(l);
             }
             Level levy = LoadLevel(gs->levels[gs->levelSelection].filename);
@@ -157,8 +159,7 @@ void UpdateGame(GameState *gs, Level *l)
     float dt = GetFrameTime();
     time_t currentTime = time(NULL);
 
-    //reset gs timers
-    //handle reset of basic timers
+    //reset gs timers - handle reset of basic timers
     if(HasTimerElapsed(&gs->t_crouch_wait,currentTime))
     {
         ResetTimer(&gs->t_crouch_wait);

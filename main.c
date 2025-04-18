@@ -22,6 +22,7 @@ int main(void)
     DisableCursor();
     SetTargetFPS(60);
     
+    //create level and game state
     Level l = {0};
     l.loaded = false;
     GameState gs = {0};
@@ -69,9 +70,9 @@ int main(void)
                 UpdateInGameMenu(&gs,&l);
                 break;
             case SCREEN_EXIT:
+                if(l.loaded){UnloadLevel(&l);}
                 CloseWindow();
                 exit(0);
-                //clean up here also
                 break;
         }
     }
