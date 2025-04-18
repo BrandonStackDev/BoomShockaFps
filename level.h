@@ -14,7 +14,7 @@
 #define MAX_ITEMS 64
 #define MAX_HIT_BOXES 8
 //constants for items and weapons and such
-#define TOTAL_WEAPON_TYPES 1
+#define TOTAL_WEAPON_TYPES 2
 // Constants for jumping and falling and such
 #define GRAVITY 0.5f
 #define JUMP_FORCE 8.0f
@@ -41,11 +41,14 @@ typedef enum {
 typedef enum {
     ITEM_M1GRAND,
     ITEM_AMMO_M1GRAND,
+    ITEM_SHOTGUN,
+    ITEM_AMMO_SHOTGUN,
     ITEM_HEALTH
 } ItemType;
 
 typedef enum {
     WEAPON_M1GRAND = 0,
+    WEAPON_SHOTGUN = 1,
 } WeaponType;
 
 typedef enum {

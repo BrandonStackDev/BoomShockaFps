@@ -615,7 +615,7 @@
 }
 // entity 39
 {
-"classname" "ammo_m1grand"
+"classname" "ammo_shotgun"
 "origin" "-2320 -1808 32"
 }
 // entity 40
@@ -712,7 +712,7 @@
 }
 // entity 52
 {
-"classname" "ammo_m1grand"
+"classname" "ammo_shotgun"
 "origin" "-112 -736 32"
 }
 // entity 53
@@ -859,4 +859,24 @@
 ( -2336 1200 48 ) ( -2335 1200 48 ) ( -2336 1200 49 ) __TB_empty [ -1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
 ( -2336 1200 48 ) ( -2336 1200 49 ) ( -2336 1201 48 ) __TB_empty [ 0 1 0 0 ] [ 0 0 -1 0 ] 270 1 1
 }
+}
+// entity 74
+{
+"classname" "weapon_shotgun"
+"origin" "-80 -688 32"
+}
+// entity 75
+{
+"classname" "ammo_shotgun"
+"origin" "-48 -768 32"
+}
+// entity 76
+{
+"classname" "ammo_shotgun"
+"origin" "-1008 -736 32"
+}
+// entity 77
+{
+"classname" "ammo_shotgun"
+"origin" "-2320 -1808 32"
 }

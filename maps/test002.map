@@ -344,7 +344,7 @@
 }
 // entity 30
 {
-"classname" "item_health"
+"classname" "ammo_shotgun"
 "origin" "-1152 -16 32"
 }
 // entity 31
@@ -354,7 +354,7 @@
 }
 // entity 32
 {
-"classname" "ammo_m1grand"
+"classname" "ammo_shotgun"
 "origin" "-1776 416 32"
 }
 // entity 33
@@ -991,4 +991,24 @@
 ( -672 -560 16 ) ( -672 -560 17 ) ( -671 -558.1111111111113 16 ) __TB_empty [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
 ( -528 -176 32 ) ( -528 -176 33 ) ( -528 -175 32 ) __TB_empty [ -1.8888888888888895 1 0 -0.333313 ] [ 0 0 -1 0 ] 270 1 1
 }
+}
+// entity 102
+{
+"classname" "weapon_shotgun"
+"origin" "720 -352 16"
+}
+// entity 103
+{
+"classname" "ammo_shotgun"
+"origin" "568 856 24"
+}
+// entity 104
+{
+"classname" "ammo_shotgun"
+"origin" "1368 -1000 40"
+}
+// entity 105
+{
+"classname" "ammo_shotgun"
+"origin" "1240 -1016 40"
 }

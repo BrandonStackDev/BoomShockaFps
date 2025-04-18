@@ -221,6 +221,20 @@ void UpdateGame(GameState *gs, Level *l)
         ShootRay(l);
         l->mc.weapons[l->mc.curWeaponIndex].ammo -= 1;
     }
+    if (IsKeyPressed(KEY_RIGHT) && l->mc.hasAnyWeapon) 
+    {
+        int startIndex = l->mc.curWeaponIndex;
+        do {
+            l->mc.curWeaponIndex = (l->mc.curWeaponIndex + 1) % l->mc.totalWeaponCount;
+        } while (!l->mc.weapons[l->mc.curWeaponIndex].have && l->mc.curWeaponIndex != startIndex);
+    }
+    if (IsKeyPressed(KEY_LEFT) && l->mc.hasAnyWeapon) 
+    {
+        int startIndex = l->mc.curWeaponIndex;
+        do {
+            l->mc.curWeaponIndex = (l->mc.curWeaponIndex - 1 + l->mc.totalWeaponCount) % l->mc.totalWeaponCount;
+        } while (!l->mc.weapons[l->mc.curWeaponIndex].have && l->mc.curWeaponIndex != startIndex);
+    }
     if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) //pause
     {
         gs->screen = SCREEN_IN_GAME_MENU;

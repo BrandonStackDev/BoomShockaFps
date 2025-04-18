@@ -174,19 +174,23 @@ Level LoadLevel(const char *filename)
     Model armyModel = LoadModel("models/soldier_4_anim.glb");
     Model m1Model = LoadModel("models/m1grand.glb");
     Model m1AmmoModel = LoadModel("models/ammo_m1grand.glb");
+    Model sgModel = LoadModel("models/shotgun.glb");
+    Model sgAmmoModel = LoadModel("models/ammo_shotgun.glb");
     Model healthModel = LoadModel("models/health_pack.glb");
     Model yetiModel = LoadModel("models/yeti_anim_2.glb");
     //store for cleanup
     printf("models malloc\n");
-    level.uniqueModels = 7;
+    level.uniqueModels = 9;
     level.uModels = MemAlloc(sizeof(Model) * level.uniqueModels);
     level.uModels[0] = treeModel;
     level.uModels[1] = treeBgModel;
     level.uModels[2] = armyModel;
     level.uModels[3] = m1Model;
     level.uModels[4] = m1AmmoModel;
-    level.uModels[5] = healthModel;
-    level.uModels[6] = yetiModel;
+    level.uModels[5] = sgModel;
+    level.uModels[6] = sgAmmoModel;
+    level.uModels[7] = healthModel;
+    level.uModels[8] = yetiModel;
 
     printf("anims\n");
     //animations
@@ -248,6 +252,7 @@ Level LoadLevel(const char *filename)
     mc.totalWeaponCount = TOTAL_WEAPON_TYPES;
     mc.hasAnyWeapon = false;
     mc.curWeaponIndex = 0;
+    //m1grand
     mc.weapons[WEAPON_M1GRAND].type = WEAPON_M1GRAND;//keep index as enum, very important
     mc.weapons[WEAPON_M1GRAND].model = m1Model;
     mc.weapons[WEAPON_M1GRAND].gunPos = (Vector3) { -0.3f, -0.4f, 0.8f };
@@ -255,6 +260,14 @@ Level LoadLevel(const char *filename)
     mc.weapons[WEAPON_M1GRAND].maxDist = 35;
     mc.weapons[WEAPON_M1GRAND].damage = 15;
     mc.weapons[WEAPON_M1GRAND].ammo = 25;
+    //shotgun
+    mc.weapons[WEAPON_SHOTGUN].type = WEAPON_SHOTGUN;//keep index as enum, very important
+    mc.weapons[WEAPON_SHOTGUN].model = sgModel;
+    mc.weapons[WEAPON_SHOTGUN].gunPos = (Vector3) { -0.3f, -0.4f, 0.8f };
+    mc.weapons[WEAPON_SHOTGUN].rot = 90;
+    mc.weapons[WEAPON_SHOTGUN].maxDist = 22.22;
+    mc.weapons[WEAPON_SHOTGUN].damage = 30;
+    mc.weapons[WEAPON_SHOTGUN].ammo = 15;
     //set important stuff
     mc.score=0;//starts fresh every level load
     mc.lives=3;//always starts at 3
@@ -425,6 +438,24 @@ Level LoadLevel(const char *filename)
             memset(&items[itemCount], 0, sizeof(Item));
             items[itemCount].type = ITEM_AMMO_M1GRAND;
             items[itemCount].model = m1AmmoModel;
+            items[itemCount].pos = entities[i].origin;
+            //items[itemCount].pos.y += 0.8f; // sinks into ground without this
+            itemCount++;
+        }
+        else if(strcmp(entities[i].className,"weapon_shotgun")==0)
+        {
+            memset(&items[itemCount], 0, sizeof(Item));
+            items[itemCount].type = ITEM_SHOTGUN;
+            items[itemCount].model = sgModel;
+            items[itemCount].pos = entities[i].origin;
+            items[itemCount].pos.y += 0.8f; // sinks into ground without this
+            itemCount++;
+        }
+        else if(strcmp(entities[i].className,"ammo_shotgun")==0)
+        {
+            memset(&items[itemCount], 0, sizeof(Item));
+            items[itemCount].type = ITEM_AMMO_SHOTGUN;
+            items[itemCount].model = sgAmmoModel;
             items[itemCount].pos = entities[i].origin;
             //items[itemCount].pos.y += 0.8f; // sinks into ground without this
             itemCount++;

@@ -425,6 +425,20 @@ void HandleItemCollision(MainCharacter* mc, Item* item)
             }
             else {item->isCollected = false;} //only collect if you have m1grand
         }
+        if(item->type==ITEM_SHOTGUN)
+        {
+            mc->hasAnyWeapon = true;
+            mc->curWeaponIndex = WEAPON_SHOTGUN;
+            mc->weapons[WEAPON_SHOTGUN].have = true;
+        }
+        else if(item->type==ITEM_AMMO_SHOTGUN)
+        {
+            if(mc->hasAnyWeapon && mc->weapons[WEAPON_SHOTGUN].have)
+            {
+                mc->weapons[WEAPON_SHOTGUN].ammo += 15; //todo: max ammo? reload?
+            }
+            else {item->isCollected = false;} //only collect if you have m1grand
+        }
         else if(item->type==ITEM_HEALTH)
         {
             if(mc->health < mc->maxHealth)
