@@ -27,6 +27,7 @@ This project requires raylib to be installed.
   - "source ../emsdk/emsdk_env.sh" will need to point correctly at you emsdk install
   - "export PATH=$HOME/binaryen/build/bin:$PATH" I dont think this is even correct for me right now, but if you have trouble, possibly adjust as needed
   - sh serve.sh to run with python3 server
+  - also, on my pi4 I get 30FPS at the best when running in a browser, I did try on a better computer and it was 60FPS, so maybe just an issue for us pi users out there.
 
 ## controls
 
