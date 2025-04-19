@@ -152,13 +152,15 @@ Texture GetText(const char *filename)
     Texture2D texture = LoadTextureFromImage(image);
     printf("Texture: %s - %dx%d\n", filename, texture.width, texture.height);
     #ifdef PLATFORM_WEB
-        SetTextureFilter(texture, TEXTURE_FILTER_BILINEAR);//for web
         if (IsTexturePOT(texture)) 
         {
+            GenTextureMipmaps(&texture); // <-- allow it now that we're POT
+            SetTextureFilter(texture, TEXTURE_FILTER_TRILINEAR);
             SetTextureWrap(texture, TEXTURE_WRAP_REPEAT);
         }
         else 
         {
+            SetTextureFilter(texture, TEXTURE_FILTER_BILINEAR);
             SetTextureWrap(texture, TEXTURE_WRAP_CLAMP);
         }
     #else
