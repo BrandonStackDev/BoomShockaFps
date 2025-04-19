@@ -21,6 +21,7 @@ This project requires raylib to be installed.
  In the future I do plan to provide a build system for Windows and possibly Mac, etc, so this is usable by others easily.
 
  I do now also have web_build.sh, this is made for my setup but can possibly be easily changed.
+  - currently textures are mostly busted for the web, I am working on that ...
   - you will need to build raylib for web and setup emcc
   - call like "bash web_build.sh"
   - change refs to ../raylib/src to whatever your path is for raylib/src folder
