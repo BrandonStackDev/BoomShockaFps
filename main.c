@@ -17,7 +17,6 @@
 // logical or ||
 static GameState gs;
 static Level l;
-Font defaultFont;
 
 void GameLoop(void) 
 {
@@ -42,6 +41,9 @@ void GameLoop(void)
         case SCREEN_EXIT:
             if(l.loaded){UnloadLevel(&l);}
             CloseWindow();
+            #ifdef PLATFORM_WEB
+                emscripten_force_exit(0);
+            #endif
             exit(0);
             break;
     }
@@ -53,8 +55,6 @@ int main(void)
     srand((unsigned int)time(NULL));//this seeds with time for all other random calls
     //init window
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Boom Shocka!");
-    defaultFont = GetFontDefault();
-    printf("Font texture id: %u\n", defaultFont.texture.id);
     // Hide mouse and capture it
     DisableCursor();
     //set target FPS
@@ -99,6 +99,10 @@ int main(void)
     
     if(l.loaded){UnloadLevel(&l);}
     CloseWindow();
-    
+
+    #ifdef PLATFORM_WEB
+        emscripten_force_exit(0); // not sure if this is needed here anymore? but just incase.
+    #endif
+
     return 0;
 }

@@ -307,9 +307,17 @@ static Mesh BuildMeshFromBrush(Brush *brush) {
 
             // Flip V to match Raylib’s coordinate system
             v_coord = 1.0f - v_coord;
+            //if web, clamp the values
+            #ifdef PLATFORM_WEB
+                if (u < 0.0f) {u = 0.0f;}
+                if (u > 1.0f) {u = 1.0f;}
+                if (v_coord < 0.0f) {v_coord = 0.0f;}
+                if (v_coord > 1.0f) {v_coord = 1.0f;}
+            #endif 
 
             mesh.texcoords[idx * 2 + 0] = u;
             mesh.texcoords[idx * 2 + 1] = v_coord;
+            //printf("texcoords - u=%f v=%f\n", u, v_coord);
         }
     }
     UploadMesh(&mesh, false);

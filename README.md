@@ -20,6 +20,14 @@ This project requires raylib to be installed.
  See raylib.com (https://github.com/raysan5/raylib/wiki) for install and build instructions, and general guidance. 
  In the future I do plan to provide a build system for Windows and possibly Mac, etc, so this is usable by others easily.
 
+ I do now also have web_build.sh, this is made for my setup but can possibly be easily changed.
+  - you will need to build raylib for web and setup emcc
+  - call like "bash web_build.sh"
+  - change refs to ../raylib/src to whatever your path is for raylib/src folder
+  - "source ../emsdk/emsdk_env.sh" will need to point correctly at you emsdk install
+  - "export PATH=$HOME/binaryen/build/bin:$PATH" I dont think this is even correct for me right now, but if you have trouble, possibly adjust as needed
+  - sh serve.sh to run with python3 server
+
 ## controls
 
 In game controls.

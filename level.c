@@ -138,13 +138,33 @@ Model DeepCopyModel(Model src)
     return dst;
 }
 
+bool IsPowerOfTwo(int x) {
+    return (x & (x - 1)) == 0;
+}
+
+bool IsTexturePOT(Texture2D tex) {
+    return IsPowerOfTwo(tex.width) && IsPowerOfTwo(tex.height);
+}
+
 Texture GetText(const char *filename)
 {
     Image image = LoadImage(filename);
     Texture2D texture = LoadTextureFromImage(image);
-    GenTextureMipmaps(&texture);  // <-- this generates mipmaps
-    SetTextureFilter(texture, TEXTURE_FILTER_TRILINEAR); // use a better filter
-    //SetTextureFilter(texture, TEXTURE_FILTER_ANISOTROPIC_8X); //4x, 8x, 16x, depending on GPU, alternate if we need/want
+    #ifdef PLATFORM_WEB
+        SetTextureFilter(texture, TEXTURE_FILTER_BILINEAR);//for web
+        if (IsTexturePOT(texture)) 
+        {
+            SetTextureWrap(texture, TEXTURE_WRAP_REPEAT);
+        }
+        else 
+        {
+            SetTextureWrap(texture, TEXTURE_WRAP_CLAMP);
+        }
+    #else
+        GenTextureMipmaps(&texture);  // <-- this generates mipmaps
+        SetTextureFilter(texture, TEXTURE_FILTER_TRILINEAR); // use a better filter
+        //SetTextureFilter(texture, TEXTURE_FILTER_ANISOTROPIC_8X); //4x, 8x, 16x, depending on GPU, alternate if we need/want
+    #endif 
     UnloadImage(image);
     return texture;
 }
