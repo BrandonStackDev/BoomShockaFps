@@ -334,8 +334,8 @@ static Mesh BuildMeshFromBrush(Brush *brush) {
         float scaleV = (maxV - minV != 0.0f) ? (1.0f / (maxV - minV)) : 1.0f;
 
         for (int i = 0; i < mesh.vertexCount; i++) {
-            mesh.texcoords[i * 2 + 0] = (mesh.texcoords[i * 2 + 0] - minU) * scaleU;
-            mesh.texcoords[i * 2 + 1] = (mesh.texcoords[i * 2 + 1] - minV) * scaleV;
+            mesh.texcoords[i * 2 + 0] = (mesh.texcoords[i * 2 + 0] - minU) * scaleU * 5;
+            mesh.texcoords[i * 2 + 1] = (mesh.texcoords[i * 2 + 1] - minV) * scaleV * 5;
         }
     #endif 
 

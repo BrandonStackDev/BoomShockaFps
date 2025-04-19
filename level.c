@@ -150,6 +150,7 @@ Texture GetText(const char *filename)
 {
     Image image = LoadImage(filename);
     Texture2D texture = LoadTextureFromImage(image);
+    printf("Texture: %s - %dx%d\n", filename, texture.width, texture.height);
     #ifdef PLATFORM_WEB
         SetTextureFilter(texture, TEXTURE_FILTER_BILINEAR);//for web
         if (IsTexturePOT(texture)) 
