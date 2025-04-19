@@ -321,6 +321,7 @@ static Mesh BuildMeshFromBrush(Brush *brush) {
 // -----------------------------
 
 Entity* LoadMapFile(const char *filename, int *modelCount) {
+   
     FILE *fp = fopen(filename, "r");
     if (!fp) {
         TraceLog(LOG_ERROR, "Could not open %s", filename);
@@ -328,7 +329,7 @@ Entity* LoadMapFile(const char *filename, int *modelCount) {
         return NULL;
     }
 
-    Brush brushes[MAX_BRUSHES];
+    Brush *brushes = MemAlloc(sizeof(Brush) * MAX_BRUSHES);
     int brushCount = 0;
     bool inBrush = false;
     Brush current = {0};
@@ -492,6 +493,8 @@ Entity* LoadMapFile(const char *filename, int *modelCount) {
         entities[i].hasSubType = brushes[i].hasSubType;
         if(brushes[i].hasSubType){strcpy(entities[i].subType,brushes[i].subType);}
     }
+
+    MemFree(brushes); //get rid of those pesky brushes
 
     return entities;
 }

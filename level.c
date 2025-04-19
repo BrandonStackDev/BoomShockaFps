@@ -277,6 +277,7 @@ Level LoadLevel(const char *filename)
     level.mc = mc;
 
     printf("-------------- load map file ------------\n");
+    printf("test\n");
     // Load the models from .map
     int entityCount = 0;
     Entity *entities = LoadMapFile(filename, &entityCount);

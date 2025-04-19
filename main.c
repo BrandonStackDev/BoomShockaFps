@@ -10,7 +10,42 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef PLATFORM_WEB
+#include <emscripten/emscripten.h>
+#endif
+
 // logical or ||
+static GameState gs;
+static Level l;
+Font defaultFont;
+
+void GameLoop(void) 
+{
+    switch (gs.screen) 
+    {
+        case SCREEN_MENU:
+            UpdateMainMenu(&gs);
+            break;
+        case SCREEN_OPTIONS:
+            UpdateOptionsMenu(&gs,&l);
+            break;
+        case SCREEN_LEVEL_SELECT:
+            UpdateLevelSelect(&gs,&l);
+            break;
+        case SCREEN_PLAYING:
+            UpdateGame(&gs,&l);
+            DrawGame(&gs,&l);
+            break;
+        case SCREEN_IN_GAME_MENU:
+            UpdateInGameMenu(&gs,&l);
+            break;
+        case SCREEN_EXIT:
+            if(l.loaded){UnloadLevel(&l);}
+            CloseWindow();
+            exit(0);
+            break;
+    }
+}
 
 int main(void)
 {
@@ -18,14 +53,17 @@ int main(void)
     srand((unsigned int)time(NULL));//this seeds with time for all other random calls
     //init window
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Boom Shocka!");
+    defaultFont = GetFontDefault();
+    printf("Font texture id: %u\n", defaultFont.texture.id);
     // Hide mouse and capture it
     DisableCursor();
+    //set target FPS
     SetTargetFPS(60);
     
     //create level and game state
-    Level l = {0};
+    l = (Level){0};
     l.loaded = false;
-    GameState gs = {0};
+    gs = (GameState){0};
     //screen and menu setup
     gs.screen = SCREEN_MENU;
     gs.menuCount = 3;
@@ -50,32 +88,14 @@ int main(void)
     gs.t_endLevel_wait = CreateTimer(5.0f);
     gs.t_endLevel_wait.virgin = false;
 
-    while (!WindowShouldClose())
-    {
-        switch (gs.screen) {
-            case SCREEN_MENU:
-                UpdateMainMenu(&gs);
-                break;
-            case SCREEN_OPTIONS:
-                UpdateOptionsMenu(&gs,&l);
-                break;
-            case SCREEN_LEVEL_SELECT:
-                UpdateLevelSelect(&gs,&l);
-                break;
-            case SCREEN_PLAYING:
-                UpdateGame(&gs,&l);
-                DrawGame(&gs,&l);
-                break;
-            case SCREEN_IN_GAME_MENU:
-                UpdateInGameMenu(&gs,&l);
-                break;
-            case SCREEN_EXIT:
-                if(l.loaded){UnloadLevel(&l);}
-                CloseWindow();
-                exit(0);
-                break;
+    #ifdef PLATFORM_WEB
+        emscripten_set_main_loop(GameLoop, 0, 1);
+    #else
+        while (!WindowShouldClose())
+        {
+            GameLoop();
         }
-    }
+    #endif
     
     if(l.loaded){UnloadLevel(&l);}
     CloseWindow();

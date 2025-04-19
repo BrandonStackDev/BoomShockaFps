@@ -47,7 +47,7 @@ typedef enum {
 } ItemType;
 
 typedef enum {
-    WEAPON_M1GRAND = 0,
+    WEAPON_M1GRAND = 0, //keep index as enum, very important
     WEAPON_SHOTGUN = 1,
 } WeaponType;
 
