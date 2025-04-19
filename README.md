@@ -73,7 +73,7 @@ If you are interested in GameDev and want to get into these tools:
             - when you finalize a choice of the four given options, you can pick poly count (3k or custom for even lower) 
         - does a great job with most prompts (I use text to model because I cant draw)
             - especially texturing, just wow, it does a fantastic job
-            - textures are also, by default too large, apparently you can use Blender to resize them tho (havnt had a chance to try yet)
+            - textures are also, by default too large, you can resize them tho and the UV stuff should still match
                 - also, for targeting raylib with .glb, you need to save the image and then add a texture image node under shading tab
  - trenchbroom (https://trenchbroom.github.io/)
     - seriously cool level designer tool
