@@ -40,6 +40,7 @@ void GameLoop(void)
             break;
         case SCREEN_EXIT:
             if(l.loaded){UnloadLevel(&l);}
+            MemFree(gs.levels);
             CloseWindow();
             #ifdef PLATFORM_WEB
                 emscripten_force_exit(0);
@@ -98,6 +99,7 @@ int main(void)
     #endif
     
     if(l.loaded){UnloadLevel(&l);}
+    MemFree(gs.levels);
     CloseWindow();
 
     #ifdef PLATFORM_WEB
