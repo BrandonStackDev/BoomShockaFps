@@ -307,19 +307,38 @@ static Mesh BuildMeshFromBrush(Brush *brush) {
 
             // Flip V to match Raylib’s coordinate system
             v_coord = 1.0f - v_coord;
-            //if web, clamp the values
-            #ifdef PLATFORM_WEB
-                if (u < 0.0f) {u = 0.0f;}
-                if (u > 1.0f) {u = 1.0f;}
-                if (v_coord < 0.0f) {v_coord = 0.0f;}
-                if (v_coord > 1.0f) {v_coord = 1.0f;}
-            #endif 
-
+            
             mesh.texcoords[idx * 2 + 0] = u;
             mesh.texcoords[idx * 2 + 1] = v_coord;
             //printf("texcoords - u=%f v=%f\n", u, v_coord);
         }
     }
+
+
+    //if web, scale the values of texcoords
+    #ifdef PLATFORM_WEB
+        float minU = 1000000.0f, maxU = -1000000.0f;
+        float minV = 1000000.0f, maxV = -1000000.0f;
+
+        for (int i = 0; i < mesh.vertexCount; i++) {
+            float u = mesh.texcoords[i * 2 + 0];
+            float v = mesh.texcoords[i * 2 + 1];
+
+            if (u < minU) minU = u;
+            if (u > maxU) maxU = u;
+            if (v < minV) minV = v;
+            if (v > maxV) maxV = v;
+        }
+
+        float scaleU = (maxU - minU != 0.0f) ? (1.0f / (maxU - minU)) : 1.0f;
+        float scaleV = (maxV - minV != 0.0f) ? (1.0f / (maxV - minV)) : 1.0f;
+
+        for (int i = 0; i < mesh.vertexCount; i++) {
+            mesh.texcoords[i * 2 + 0] = (mesh.texcoords[i * 2 + 0] - minU) * scaleU;
+            mesh.texcoords[i * 2 + 1] = (mesh.texcoords[i * 2 + 1] - minV) * scaleV;
+        }
+    #endif 
+
     UploadMesh(&mesh, false);
     return mesh;
 }
