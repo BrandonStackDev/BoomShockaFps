@@ -22,11 +22,13 @@ This project requires raylib to be installed.
 
  I do now also have web_build.sh, this is made for my setup but can possibly be easily changed.
   - textures are wrapped not repeated for the web, but I am mostly happy with them. Just wanted to note, it will look different for the web.
-  - you will need to build raylib for web and setup emcc
+    - I adjusted texcoords to scale between 0-1, but that just wraps the whole thing, so then I added a hack to multiply the result by 5, and its better for most env objects. Not as good as native, but better than it was.
+  - you will need to build raylib for web and setup emcc (ask AI and good luck, were all counting on you)
   - call like "bash web_build.sh"
   - change refs to ../raylib/src to whatever your path is for raylib/src folder
   - "source ../emsdk/emsdk_env.sh" will need to point correctly at you emsdk install
   - "export PATH=$HOME/binaryen/build/bin:$PATH" I dont think this is even correct for me right now, but if you have trouble, possibly adjust as needed
+    - on my pi4, I had trouble with binaryen, it doesnt come out of the box for arm_64, if on a pi or similar you may need to clone it, and then build it (v123 for me), and even make the correct symlinks, ask ChatGPT for help, thats what I did, and also, if you are on a pi, it will build very slowly, like 30-60mins. Just a heads up.
   - sh serve.sh to run with python3 server
   - also, on my pi4 I get 30FPS at the best when running in a browser, I did try on a better computer and it was 60FPS, so maybe just an issue for us pi users out there.
 
