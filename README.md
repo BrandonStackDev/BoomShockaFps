@@ -1,6 +1,8 @@
-This is a simple First Person Shooter game.
+# BoomShocka FPS
 
-I am new to GameDev, this is my third game ever. I am so far about 3 weeks into the project.
+This is a simple First Person Shooter game, written in c with raylib.
+
+I am new to GameDev, this is my third game. I am so far about 4 weeks into the project.
 
 I run on a raspberry pi4.
 
@@ -14,12 +16,11 @@ I use TrenchBroom for level creation.
 This project requires raylib to be installed.
  I have build.sh file and likely if you are also on a pi, it might work 
  (cd BoomShockaFps; sh build.sh; ./game),
- possibly even for other linux distro's, but for Windows or Mac and
- probably even other linux distro's for the most part this will not work.
- See raylib.com (https://github.com/raysan5/raylib/wiki) for install and build instructions,
- and general guidance. In the future I do plan to provide a build system for Windows and a build system for regular linux distro's.
- Mac users, sorry...I have no plans to build for Mac for now. Maybe even html5 but not Mac.
+ possibly even for other linux distro's, but for Windows or Mac you will need to add your own script.
+ See raylib.com (https://github.com/raysan5/raylib/wiki) for install and build instructions, and general guidance. 
+ In the future I do plan to provide a build system for Windows and possibly Mac, etc, so this is usable by others easily.
 
+## controls
 
 In game controls.
   - WASD to move
@@ -35,6 +36,7 @@ In Menu controls,
  - ENTER to select
  - in options D is toggle difficulty and Y is toggle y-inversion
 
+## tools
 
 My full pipeline for all of the stuff is TrenchBroom for level design 
 (I have a .map parser, courtesy of AI of course, feel free to steal and improve, any of this really is fine to copy, modify, etc... 
@@ -71,6 +73,7 @@ If you are interested in GameDev and want to get into these tools:
         - I use regular Quake .map files becuase they are simple
         - I use classname and subtype to control textures, raylib doesnt really support per face textures
 
+## future enhancements, etc...
 
  TODO:
   - more levels
@@ -102,6 +105,7 @@ Rigging and assigning weights is still a problem for me, I havnt found exactly t
  The yeti has really bad animation. I used a .py script in Blender to auto assign the weights and it worked okay. But I did a bad job correcting the result, so the yeti has limited range of motion off of his bones and as a result I did not create many animations for him and the ones I did are quite crappy. Also the yeti is trouble-some in general. He is super easy if you just shoot at the head, but really hard if you let him make it too you. Shooting him stops him in his tracks which looks odd and there is just many bugs to fix and small tweaks that I need to make. I will probably just deal with the large vertice count and texture size and just do a better job in the future.
  
  The soldier has okay animation but the models have cracks that appear as it moves because of bad weights (yes yes weght painting I know).
+ Also this model is not centered correctly and my collision detection is fragile so if I make changes he often jitters or jumps.
  Overall, despite the issues, I am happy with the soldier and will probably not improve him much in this project.
 
  In general this project is a learning experience for me, I plan to do more games in the future and will take the lessons I learn here with me.
