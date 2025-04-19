@@ -254,6 +254,7 @@ Level LoadLevel(const char *filename)
     mc.curWeaponIndex = 0;
     //m1grand
     mc.weapons[WEAPON_M1GRAND].type = WEAPON_M1GRAND;//keep index as enum, very important
+    strcpy(mc.weapons[WEAPON_M1GRAND].name, "m1grand");
     mc.weapons[WEAPON_M1GRAND].model = m1Model;
     mc.weapons[WEAPON_M1GRAND].gunPos = (Vector3) { -0.3f, -0.4f, 0.8f };
     mc.weapons[WEAPON_M1GRAND].rot = 90;
@@ -262,10 +263,11 @@ Level LoadLevel(const char *filename)
     mc.weapons[WEAPON_M1GRAND].ammo = 25;
     //shotgun
     mc.weapons[WEAPON_SHOTGUN].type = WEAPON_SHOTGUN;//keep index as enum, very important
+    strcpy(mc.weapons[WEAPON_SHOTGUN].name, "shotgun");
     mc.weapons[WEAPON_SHOTGUN].model = sgModel;
     mc.weapons[WEAPON_SHOTGUN].gunPos = (Vector3) { -0.3f, -0.4f, 0.8f };
     mc.weapons[WEAPON_SHOTGUN].rot = 90;
-    mc.weapons[WEAPON_SHOTGUN].maxDist = 22.22;
+    mc.weapons[WEAPON_SHOTGUN].maxDist = 16;
     mc.weapons[WEAPON_SHOTGUN].damage = 30;
     mc.weapons[WEAPON_SHOTGUN].ammo = 15;
     //set important stuff

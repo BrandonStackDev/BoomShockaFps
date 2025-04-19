@@ -123,6 +123,7 @@ typedef struct {
 typedef struct {
     Model model;
     WeaponType type;
+    char name[64];
     bool have;
     Vector3 gunPos;//for the 3d camera that is used
     float rot;

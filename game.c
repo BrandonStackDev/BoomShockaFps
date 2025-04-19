@@ -422,14 +422,20 @@ void DrawGame(GameState *gs, Level *l)
         if(l->mc.hasAnyWeapon){DrawGunHeld(l->mc.weapons[l->mc.curWeaponIndex].model,l->mc.camera,l->mc.weapons[l->mc.curWeaponIndex].gunPos,l->mc.weapons[l->mc.curWeaponIndex].rot);}
         //2d stuff
         DrawCustomFPS(700, 10, BLOODRED);
-        if(l->mc.hasAnyWeapon){DrawCrosshair();}
         DrawHealthBar((Vector2){700,40},80,5,l->mc.health/l->mc.maxHealth);
-        DrawText(TextFormat("Score: %d", l->mc.score), 10, 10, 20, BLOODRED);
-        if(l->mc.hasAnyWeapon){DrawText(TextFormat("Ammo: %d", l->mc.weapons[l->mc.curWeaponIndex].ammo), 10, 30, 20, BLOODRED);}
-        //draw live hearts
+        //draw life hearts
         for (int i = 0; i < l->mc.lives; i++) 
         {
             DrawHeart((Vector2){712 + i * 30, 60}, 20, RED); // or BLOODRED
+        }
+        //score
+        DrawText(TextFormat("Score: %d", l->mc.score), 10, 10, 20, BLOODRED);
+        //2d weapon stuff
+        if(l->mc.hasAnyWeapon)
+        {
+            DrawCrosshair();
+            DrawText(TextFormat("Ammo: %d", l->mc.weapons[l->mc.curWeaponIndex].ammo), 10, 30, 20, BLOODRED);
+            DrawText(TextFormat("Gun: %s", l->mc.weapons[l->mc.curWeaponIndex].name), 10, 50, 20, BLOODRED);
         }
         //handle end level sequences
         if(deadBgCount >= l->bgCount) //for debugging this || true)
