@@ -41,14 +41,14 @@ In game controls.
   - WASD to move
     - mouse to control the view, mouse capture is on
   - CTRL to crouch/stand up
-  - left mouse click to shoot
+  - Left mouse click to shoot
     - head shots are better
     - left and right arrow keys to change weapons
   - ENTER to pause
 
 In Menu controls,
  - arrow up and down to select
- - ENTER to select
+ - ENTER to submit
  - in options D is toggle difficulty and Y is toggle y-inversion
 
 ## tools
