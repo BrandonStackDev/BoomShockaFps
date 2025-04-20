@@ -393,7 +393,11 @@ Level LoadLevel(const char *filename)
             //Model armyModel = LoadModel("models/soldier_anim.glb");
             badguys[bgCount].type = BG_TYPE_ARMY;
             badguys[bgCount].drawColor = WHITE; //always white
-            badguys[bgCount].model = DeepCopyModel(armyModel);
+            #ifdef MEMORY_SAFE_MODE
+                badguys[bgCount].model = LoadModel("models/soldier_4_anim.glb");
+            #else
+                badguys[bgCount].model = DeepCopyModel(armyModel);
+            #endif
             if(entities[i].hasSubType)
             {
                 if(strcmp(entities[i].subType,"shooter")==0)
@@ -423,7 +427,11 @@ Level LoadLevel(const char *filename)
             memset(&badguys[bgCount], 0, sizeof(Enemy));
             badguys[bgCount].type = BG_TYPE_YETI;
             badguys[bgCount].drawColor = WHITE;
-            badguys[bgCount].model = DeepCopyModel(yetiModel);
+            #ifdef MEMORY_SAFE_MODE
+                badguys[bgCount].model = LoadModel("models/yeti_anim_2.glb");
+            #else
+                badguys[bgCount].model = DeepCopyModel(yetiModel);
+            #endif
             badguys[bgCount].anims = yetiAnimations;
             badguys[bgCount].animCount = yetiAnimCount;
             badguys[bgCount].pos = entities[i].origin;

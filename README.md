@@ -34,16 +34,16 @@ This project requires raylib to be installed.
 
 I added a win_build.sh file for msys2 mingw64 on Windows10/11
  - install mysys2 "winget install --id MSYS2.MSYS2 -e", or maybe there are other ways not using winget, IDK
- - open a msys2 mingw64 terminal, has to be that specifically
+ - open a msys2 mingw64 terminal, has to be that  or the x86 one for x86 builds
  - install stuff with pacman
     - pacman -Syu
     - pacman -S mingw-w64-x86_64-raylib
     - pacman -S mingw-w64-x86_64-gcc
  - navigate to the BoomShockaFps folder, run "sh win_build.sh"
     - you might need to cd /c, before the path will show up correctly
+    - uses a custom flag MEMORY_SAFE_MODE, all this changes is, for badguy models which I preffer to deep copy, it opens their file fresh for every bdaguy in the level, same result as deep copy but simpler and safer because raylib is not as flawed as my own code. I did this because while deep copy seems to work in linux and web, it seems c dev on Windows is actually more strict about proper memory managment, and I have some mistakes. I did try to fix them the right way first, went down the rabbit hole, got stuck and finally at 3AM thought of this. Just a note, this means on windows version, you will hit the file system alot more and it will take longer to load levels.
  - ./game.exe
     - you could copy all of the needed DLLs to the BoomShockaFps folder or wherever you want to keep the game.exe file, but otherwise, you cant just click on the exe file and run from file explorer or the like, you need to run it in mysys2 mingw64 for the DLL's to be found
-    - I had a weird error when I ran, once a beat a level, it just exited, no error message, not sure what is going on there, it works on the pi4 fine, still looking into this issue.
     - I should probably make this build system more user friendly, like use cmake or something, not sure yet
 
 ## controls
