@@ -1,5 +1,6 @@
 # Ignore compiled executable
 game
+game.exe
 
 # VSCode settings
 .vscode/
