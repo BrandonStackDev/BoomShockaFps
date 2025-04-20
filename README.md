@@ -33,6 +33,9 @@ This project requires raylib to be installed.
   - also, on my pi4 I get 30FPS at the best when running in a browser, I did try on a better computer and it was 60FPS, so maybe just an issue for us pi users out there.
 
 ## controls
+Esc on desktop/native is quit.
+ - Esc on web uncaptures the mouse, but you might not be able to recapture it, so refresh to fix this (the game will restart tho)
+    -  click the game screen to capture the mouse if it doesnt happen automatically
 
 In game controls.
   - WASD to move
