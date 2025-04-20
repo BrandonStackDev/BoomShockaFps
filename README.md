@@ -32,6 +32,19 @@ This project requires raylib to be installed.
   - sh serve.sh to run with python3 server
   - also, on my pi4 I get 30FPS at the best when running in a browser, I did try on a better computer and it was 60FPS, so maybe just an issue for us pi users out there.
 
+I added a win_build.sh file for msys2 mingw64 on Windows10/11
+ - install mysys2 "winget install --id MSYS2.MSYS2 -e", or maybe there are other ways not using winget, IDK
+ - open a msys2 mingw64 terminal, has to be that specifically
+ - install stuff with pacman
+  - pacman -Syu
+  - pacman -S mingw-w64-x86_64-raylib
+  - pacman -S mingw-w64-x86_64-gcc
+ - navigate to the BoomShockaFps folder, run "sh win_build.sh"
+ - ./game.exe
+  - you could copy all of the needed DLLs to the BoomShockaFps folder or wherever you want to keep the game.exe file, but otherwise, you cant just click on the exe file and run from file explorer or the like, you need to run it in mysys2 mingw64 for the DLL's to be found
+  - I had a weird error when I ran, once a beat a level, it just exited, no error message, not sure what is going on there, it works on the pi4 fine, still looking into this issue.
+  - I should probably make this build system more user friendly, like use cmake or something, not sure yet
+
 ## controls
 Esc on desktop/native is quit.
  - Esc on web uncaptures the mouse, but you might not be able to recapture it, so refresh to fix this (the game will restart tho)
