@@ -23,6 +23,7 @@ void GameLoop(void)
     switch (gs.screen) 
     {
         case SCREEN_MENU:
+            if(l.loaded){UnloadLevel(&l);}
             UpdateMainMenu(&gs);
             break;
         case SCREEN_OPTIONS:
