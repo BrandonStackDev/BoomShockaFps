@@ -40,6 +40,7 @@ I added a win_build.sh file for msys2 mingw64 on Windows10/11
     - pacman -S mingw-w64-x86_64-raylib
     - pacman -S mingw-w64-x86_64-gcc
  - navigate to the BoomShockaFps folder, run "sh win_build.sh"
+    - you might need to cd /c, before the path will show up correctly
  - ./game.exe
     - you could copy all of the needed DLLs to the BoomShockaFps folder or wherever you want to keep the game.exe file, but otherwise, you cant just click on the exe file and run from file explorer or the like, you need to run it in mysys2 mingw64 for the DLL's to be found
     - I had a weird error when I ran, once a beat a level, it just exited, no error message, not sure what is going on there, it works on the pi4 fine, still looking into this issue.
