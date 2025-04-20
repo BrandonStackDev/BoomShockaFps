@@ -6,7 +6,7 @@ OUT_UNIVERSAL="game"
 OUT_X86_64="game_x86_64"
 OUT_ARM64="game_arm64"
 
-CFLAGS="-I/usr/local/include -DPLATFORM_DESKTOP"
+CFLAGS="-I/usr/local/include -DPLATFORM_DESKTOP -DMEMORY_SAFE_MODE"
 RAYLIB_STATIC="/usr/local/lib/libraylib.a"
 LDFLAGS="$RAYLIB_STATIC -lm \
   -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo"
