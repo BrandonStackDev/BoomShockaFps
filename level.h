@@ -160,6 +160,7 @@ typedef struct {
     float pitch;
     float mouseSensitivity;
     float moveSpeed;
+    float crouchSpeed;
     float yVelocity;
     bool isJumping;
     bool isFalling;

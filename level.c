@@ -249,7 +249,8 @@ Level LoadLevel(const char *filename)
     mc.yaw = 0.0f;
     mc.pitch = 0.0f;
     mc.mouseSensitivity = 0.003f;
-    mc.moveSpeed = 5.0f;
+    mc.moveSpeed = 10.0f;
+    mc.crouchSpeed = 5.0f;
     mc.yVelocity = 0.0f;
     mc.isFalling = false;
     mc.isJumping = false;

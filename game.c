@@ -206,8 +206,18 @@ void UpdateGame(GameState *gs, Level *l)
     if (IsKeyDown(KEY_S)) {move = Vector3Subtract(move, forwardMove);}
     if (IsKeyDown(KEY_A)) {move = Vector3Subtract(move, right);}
     if (IsKeyDown(KEY_D)) {move = Vector3Add(move, right);}
-    if (IsKeyDown(KEY_SPACE) && !l->mc.isJumping && !l->mc.isCrouching && !l->mc.isFalling) 
-    { l->mc.isJumping = true; l->mc.yVelocity=JUMP_FORCE; }
+    if (IsKeyDown(KEY_SPACE) && !l->mc.isJumping && !l->mc.isFalling) 
+    { 
+        if(l->mc.isCrouching)
+        {
+            l->mc.isCrouching = false;
+        }
+        else
+        {
+            l->mc.isJumping = true;
+            l->mc.yVelocity=JUMP_FORCE; 
+        }
+    }
     if (IsKeyDown(KEY_P)) {printf("position: %f %f %f\n", l->mc.pos.x,l->mc.pos.y,l->mc.pos.z);}
     if (IsKeyDown(KEY_B)) {gs->showBoxes = !gs->showBoxes;}
     if (IsKeyDown(KEY_T)) {gs->drawTri = !gs->drawTri;}
@@ -241,7 +251,7 @@ void UpdateGame(GameState *gs, Level *l)
     }
 
     //handle movement
-    move = Vector3Scale(Vector3Normalize(move), l->mc.moveSpeed * dt);
+    move = Vector3Scale(Vector3Normalize(move), (l->mc.isCrouching?l->mc.crouchSpeed:l->mc.moveSpeed) * dt);
     l->mc.pos = Vector3Add(l->mc.pos, move);
 
     //handle jumping logic, parabula (or striaght down if falling)
