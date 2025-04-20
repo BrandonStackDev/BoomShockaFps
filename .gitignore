@@ -1,5 +1,7 @@
 # Ignore compiled executable
 game
+game_x86_64
+game_arm64
 game.exe
 
 # VSCode settings

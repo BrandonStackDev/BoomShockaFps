@@ -20,7 +20,7 @@ This project requires raylib to be installed.
  See raylib.com (https://github.com/raysan5/raylib/wiki) for install and build instructions, and general guidance. 
  In the future I do plan to provide a build system for Windows and possibly Mac, etc, so this is usable by others easily.
 
- I do now also have web_build.sh, this is made for my setup but can possibly be easily changed.
+ I added web_build.sh, this is made for my setup but can possibly be easily changed.
   - textures are wrapped not repeated for the web, but I am mostly happy with them. Just wanted to note, it will look different for the web.
     - I adjusted texcoords to scale between 0-1, but that just wraps the whole thing, so then I added a hack to multiply the result by 5, and its better for most env objects. Not as good as native, but better than it was.
   - you will need to build raylib for web and setup emcc (ask AI and good luck, were all counting on you)
@@ -44,7 +44,10 @@ I added a win_build.sh file for msys2 mingw64 on Windows10/11
     - uses a custom flag MEMORY_SAFE_MODE, all this changes is, for badguy models which I preffer to deep copy, it opens their file fresh for every bdaguy in the level, same result as deep copy but simpler and safer because raylib is not as flawed as my own code. I did this because while deep copy seems to work in linux and web, it seems c dev on Windows is actually more strict about proper memory managment, and I have some mistakes. I did try to fix them the right way first, went down the rabbit hole, got stuck and finally at 3AM thought of this. Just a note, this means on windows version, you will hit the file system alot more and it will take longer to load levels.
  - ./game.exe
     - you could copy all of the needed DLLs to the BoomShockaFps folder or wherever you want to keep the game.exe file, but otherwise, you cant just click on the exe file and run from file explorer or the like, you need to run it in mysys2 mingw64 for the DLL's to be found
-    - I should probably make this build system more user friendly, like use cmake or something, not sure yet
+
+I added mac_build.sh
+ - on newer macs you can maybe go the brew install raylib route, but I had to build from source for both arm64 and x86_64, and then put things into the correct places, see the script for details.
+ - once built, macs have this weird thing were the exe starts in the home folder, so you will need to copy the asset folders (textures, models, maps) to the home folder for them to be found
 
 ## controls
 Esc on desktop/native is quit.
