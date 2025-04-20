@@ -97,6 +97,8 @@ If you are interested in GameDev and want to get into these tools:
             - especially texturing, just wow, it does a fantastic job
             - textures are also, by default too large, you can resize them tho and the UV stuff should still match
                 - also, for targeting raylib with .glb, you need to save the image and then add a texture image node under shading tab
+ - Blender (https://www.blender.org/) - you probably know this one
+    - I use this to rig, animate, and get .glb files ready to export to raylib
  - trenchbroom (https://trenchbroom.github.io/)
     - seriously cool level designer tool
         - much more simple than Blender because it is specialized
@@ -125,6 +127,7 @@ If you are interested in GameDev and want to get into these tools:
     - just better code in general, possibly shared code where possible
   - variable weather and time of day, at least background colors could change
   - objects that you can interact with like opening doors, etc...
+  - Fix DeepCopyModel and DeepCopyMesh functions
 
 The main thing that could be improved right now is my asset collection, 
 some of them are way too big (the yeti is like 8k triangles).
