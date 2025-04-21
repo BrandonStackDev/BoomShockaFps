@@ -14,9 +14,30 @@
 #include <emscripten/emscripten.h>
 #endif
 
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#include <libgen.h>
+#include <unistd.h>
+#endif
+
+
 // logical or ||
 static GameState gs;
 static Level l;
+
+void SetWorkingDirectoryToAppResources()
+{
+#ifdef __APPLE__
+    char path[1024];
+    uint32_t size = sizeof(path);
+    if (_NSGetExecutablePath(path, &size) == 0)
+    {
+        char *dir = dirname(path);
+        chdir(dir); // Move to Contents/MacOS
+        chdir("../Resources"); // Move to Resources folder
+    }
+#endif
+}
 
 void GameLoop(void) 
 {
@@ -53,6 +74,7 @@ void GameLoop(void)
 
 int main(void)
 {
+    SetWorkingDirectoryToAppResources();
     //random behavior please
     srand((unsigned int)time(NULL));//this seeds with time for all other random calls
     //init window
@@ -61,7 +83,7 @@ int main(void)
     DisableCursor();
     //set target FPS
     SetTargetFPS(60);
-    
+
     //create level and game state
     l = (Level){0};
     l.loaded = false;
