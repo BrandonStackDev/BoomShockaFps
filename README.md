@@ -13,18 +13,15 @@ ChatGPT also helps with properly utilizing raylib and with creating textures.
 And I am not very good at Blender, so I use Meshy for initial model/asset creation.
 I use TrenchBroom for level creation.
 
-This project requires raylib to be installed.
- I have build.sh file and likely if you are also on a pi, it might work 
- (cd BoomShockaFps; sh build.sh; ./game),
- possibly even for other linux distro's, but for Windows or Mac you will need to add your own script.
- See raylib.com (https://github.com/raysan5/raylib/wiki) for install and build instructions, and general guidance. 
- In the future I do plan to provide a build system for Windows and possibly Mac, etc, so this is usable by others easily.
+This project requires raylib to be installed. See raylib.com (https://github.com/raysan5/raylib/wiki) for install and build instructions, and general guidance. Also, you might want to start by asking your favorite LLM how to get started, and adjusting things as needed.
+ I have build.sh file and likely if you are also on a pi, it might work (possibly for other linux as well)
+  - (cd BoomShockaFps; sh build.sh; ./game),
 
  I added web_build.sh, this is made for my setup but can possibly be easily changed.
   - textures are wrapped not repeated for the web, but I am mostly happy with them. Just wanted to note, it will look different for the web.
-    - I adjusted texcoords to scale between 0-1, but that just wraps the whole thing, so then I added a hack to multiply the result by 5, and its better for most env objects. Not as good as native, but better than it was.
+    - I adjusted texcoords to scale between 0-1, but that just wraps the whole thing, so then I added a hack to multiply the result by 5, and its better for most env objects. Not as good as native.
   - you will need to build raylib for web and setup emcc (ask AI and good luck, were all counting on you)
-  - call like "bash web_build.sh"
+  - call like "bash web_build.sh", I cant remember why but this one has to be called with bash
   - change refs to ../raylib/src to whatever your path is for raylib/src folder
   - "source ../emsdk/emsdk_env.sh" will need to point correctly at you emsdk install
   - "export PATH=$HOME/binaryen/build/bin:$PATH" I dont think this is even correct for me right now, but if you have trouble, possibly adjust as needed
@@ -45,9 +42,10 @@ I added a win_build.sh file for msys2 mingw64 on Windows10/11
  - ./game.exe
     - you could copy all of the needed DLLs to the BoomShockaFps folder or wherever you want to keep the game.exe file, but otherwise, you cant just click on the exe file and run from file explorer or the like, you need to run it in mysys2 mingw64 for the DLL's to be found
 
-I added mac_build.sh
- - on newer macs you can maybe go the brew install raylib route, but I had to build from source for both arm64 and x86_64, and then put things into the correct places, see the script for details.
- - once built, macs have this weird thing were the exe starts in the home folder, so you will need to copy the asset folders (textures, models, maps) to the home folder for them to be found
+I added mac_build.sh and mac_create_app.sh
+ - on newer macs you can maybe go the brew install raylib route, but I am on an older Mac-mini, and had to build from source for both arm64 and x86_64, and then put things into the correct places, see the script for details of what is expected.
+ - mac_build.sh output is best to just be run from the terminal like ./game. if you want to run it from finder, you should copy the asset folders over to your home directory (Textures, Models, Maps). Additionally, the call to SetWorkingDirectoryToAppResources in main.c will work when built with mac_create_app.sh but should fail silently when built with mac_build.sh, 
+  unless you were to add a Resources folder in /Users and copy the asset folders into it (Its probably better to just let it fail silently and run from a terminal). 
 
 ## controls
 Esc on desktop/native is quit.
