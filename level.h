@@ -178,6 +178,7 @@ typedef struct {
     Weapon weapons[TOTAL_WEAPON_TYPES];
     int score;
     int lives;
+    Sound deathSound;
 } MainCharacter;
 
 typedef struct {
@@ -200,6 +201,8 @@ typedef struct {
     int uniqueAnimations;
     ModelAnimation **uAnimations; // double pointer for this guy over here ... wtf man
     int *uNumAnimations;
+    int uniqueSounds;
+    Sound *uSounds;
 } Level;
 
 Level LoadLevel(const char *filename);

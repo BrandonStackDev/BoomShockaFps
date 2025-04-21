@@ -85,6 +85,8 @@ int main(void)
     srand((unsigned int)time(NULL));//this seeds with time for all other random calls
     //init window
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Boom Shocka!");
+    //audio
+    InitAudioDevice();  // IMPORTANT: Must initialize audio!
     // Hide mouse and capture it
     DisableCursor();
     //set target FPS

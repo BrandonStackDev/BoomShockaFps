@@ -230,12 +230,14 @@ Level LoadLevel(const char *filename)
     level.uNumAnimations[0] = armyAnimCount;
     level.uAnimations[1] =yetiAnimations;
     level.uNumAnimations[1] = yetiAnimCount;
-
-    //the bones
-    // for (int i = 0; i < armyModel.boneCount; i++)
-    // {
-    //     printf("army model, bone %d : %s\n", i, armyModel.bones[i].name);
-    // }
+    
+    //sounds
+    printf("sounds\n");
+    Sound deathSound = LoadSound("sounds/scream.mp3");
+    printf("sounds malloc\n");
+    level.uniqueSounds = 1;
+    level.uSounds = MemAlloc(sizeof(Sound) * level.uniqueSounds);
+    level.uSounds[0] = deathSound;
 
     printf("mc creation\n");
     //create main character
@@ -294,6 +296,8 @@ Level LoadLevel(const char *filename)
     mc.weapons[WEAPON_SHOTGUN].maxDist = 16;
     mc.weapons[WEAPON_SHOTGUN].damage = 30;
     mc.weapons[WEAPON_SHOTGUN].ammo = 15;
+    //mc sounds
+    mc.deathSound = deathSound;
     //set important stuff
     mc.score=0;//starts fresh every level load
     mc.lives=3;//always starts at 3
@@ -601,12 +605,19 @@ void UnloadLevel(Level * l)
     {
         UnloadTexture(l->uTextures[i]);
     }
+    printf("unload sounds\n");
+    //unique sounds
+    for(int i=0;i<l->uniqueSounds;i++)
+    {
+        UnloadSound(l->uSounds[i]);
+    }
     printf("MemFree unique lists\n");
-    // Free dynamically allocated pointer arrays if needed
+    // Free dynamically allocated pointer arrays
     MemFree(l->uModels);
     MemFree(l->uAnimations);
     MemFree(l->uNumAnimations);
     MemFree(l->uTextures);
+    MemFree(l->uSounds);
     printf("MemFree pointer lists\n");
     printf(" - items\n");
     MemFree(l->items);

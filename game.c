@@ -347,6 +347,7 @@ void UpdateGame(GameState *gs, Level *l)
         l->mc.yVelocity = 0;
         l->mc.isJumping = false;
         l->mc.isFalling = false;
+        PlaySound(l->mc.deathSound);
     }
     //update camera before draw
     l->mc.camera.position = (Vector3){
