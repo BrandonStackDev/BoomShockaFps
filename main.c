@@ -44,7 +44,13 @@ void GameLoop(void)
     switch (gs.screen) 
     {
         case SCREEN_MENU:
-            if(l.loaded){UnloadLevel(&l);}
+            if(l.loaded)
+            {
+                printf("SCREEN_MENU - Unloading level ...\n");
+                gs.fadeColor.a = 0;
+                gs.deathFadeColor.a = 0;
+                UnloadLevel(&l);
+            }
             UpdateMainMenu(&gs);
             break;
         case SCREEN_OPTIONS:
