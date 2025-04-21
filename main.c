@@ -1,7 +1,6 @@
 #include "level.h"
 #include "game.h"
 #include "timer.h"
-#include "collision.h"
 #include "raylib.h"
 #include "raymath.h"
 #include "rlgl.h"
@@ -80,6 +79,7 @@ void GameLoop(void)
 
 int main(void)
 {
+    //this one is for Mac .app folder, to find asset folders
     SetWorkingDirectoryToAppResources();
     //random behavior please
     srand((unsigned int)time(NULL));//this seeds with time for all other random calls
