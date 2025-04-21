@@ -44,7 +44,7 @@ I added a win_build.sh file for msys2 mingw64 on Windows10/11
 
 I added mac_build.sh and mac_create_app.sh
  - on newer macs you can maybe go the brew install raylib route, but I am on an older Mac-mini, and had to build from source for both arm64 and x86_64, and then put things into the correct places, see the script for details of what is expected.
- - mac_build.sh output is best to just be run from the terminal like ./game. if you want to run it from finder, you should copy the asset folders over to your home directory (Textures, Models, Maps). Additionally, the call to SetWorkingDirectoryToAppResources in main.c will work when built with mac_create_app.sh but should fail silently when built with mac_build.sh, 
+ - mac_build.sh output is best to just be run from the terminal like ./game. if you want to run it from finder, you should copy the asset folders over to your home directory (textures, models, maps, sounds). Additionally, the call to SetWorkingDirectoryToAppResources in main.c will work when built with mac_create_app.sh but should fail silently when built with mac_build.sh, 
   unless you were to add a Resources folder in /Users and copy the asset folders into it (Its probably better to just let it fail silently and run from a terminal). 
 
 ## controls

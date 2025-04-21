@@ -5,7 +5,7 @@ set -e
 APP_NAME="BoomShocka"
 EXE_NAME="game"
 SRC_FILES="*.c"
-ASSETS_DIRS=("textures" "models" "maps")
+ASSETS_DIRS=("textures" "models" "maps" "sounds")
 
 # Output paths
 APP_BUNDLE="$APP_NAME.app"
