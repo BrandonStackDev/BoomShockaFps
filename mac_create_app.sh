@@ -65,5 +65,7 @@ cat > "$PLIST" <<EOF
 </plist>
 EOF
 
+zip -r BoomShocka.zip BoomShocka.app
+
 echo "✅ Done! Run with:"
 echo "  open \"$APP_BUNDLE\""

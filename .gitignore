@@ -3,6 +3,8 @@ game
 game_x86_64
 game_arm64
 game.exe
+BoomShocka.zip 
+BoomShocka.app/
 
 # VSCode settings
 .vscode/
