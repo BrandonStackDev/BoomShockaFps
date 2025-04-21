@@ -55,11 +55,15 @@ Esc on desktop/native is quit.
 In game controls.
   - WASD to move
     - mouse to control the view, mouse capture is on
+  - Space Bar to jump
   - CTRL to crouch/stand up
   - Left mouse click to shoot
     - head shots are better
     - left and right arrow keys to change weapons
   - ENTER to pause
+  - Dev commands
+    - B toggles bounding boxes
+    - T toggles triangle mode
 
 In Menu controls,
  - arrow up and down to select
