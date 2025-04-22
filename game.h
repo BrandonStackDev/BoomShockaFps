@@ -34,6 +34,7 @@ typedef struct {
 typedef struct {
     GameScreen screen;
     Difficulty diff;
+    bool isMouseCaptured;
     bool invertY;
     bool showBoxes;
     bool drawTri;

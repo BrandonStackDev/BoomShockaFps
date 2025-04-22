@@ -107,7 +107,6 @@ void UpdateLevelSelect(GameState *gs, Level *l) {
             l->loaded = true;
             gs->screen = SCREEN_PLAYING;
         }
-
         // Draw menu
         for (int i = 0; i < gs->levelCount; i++) {
             Color color = (i == gs->levelSelection) ? YELLOW : GRAY;

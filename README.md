@@ -50,7 +50,9 @@ I added mac_build.sh and mac_create_app.sh
 ## controls
 Esc on desktop/native is quit.
  - Esc on web uncaptures the mouse, but you might not be able to recapture it, so refresh to fix this (the game will restart tho)
-    -  click the game screen to capture the mouse if it doesnt happen automatically
+    -  On web version, click the game screen to capture the mouse if it doesnt happen automatically
+
+M to toggle mouse capture (I dont yet know how this works with web builds)
 
 In game controls.
   - WASD to move

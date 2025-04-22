@@ -40,6 +40,20 @@ void SetWorkingDirectoryToAppResources()
 
 void GameLoop(void) 
 {
+    //always, in any screen, M will toggle mouse capture
+    if(IsKeyPressed(KEY_M))
+    {
+        if(gs.isMouseCaptured)
+        {
+            EnableCursor();
+            gs.isMouseCaptured = false;
+        }
+        else
+        {
+            DisableCursor();
+            gs.isMouseCaptured = true;
+        }
+    }
     switch (gs.screen) 
     {
         case SCREEN_MENU:
@@ -96,6 +110,8 @@ int main(void)
     l = (Level){0};
     l.loaded = false;
     gs = (GameState){0};
+    //set the mouse capture to true, because we capture the moue by default
+    gs.isMouseCaptured = true;
     //screen and menu setup
     gs.screen = SCREEN_MENU;
     gs.menuCount = 3;
