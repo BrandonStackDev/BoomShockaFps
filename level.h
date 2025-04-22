@@ -133,6 +133,7 @@ typedef struct {
     float maxDist;
     float damage;
     int ammo;
+    Sound shootSound;
 } Weapon;
 
 typedef struct {

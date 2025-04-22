@@ -251,6 +251,7 @@ void UpdateGame(GameState *gs, Level *l)
     }
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && l->mc.hasAnyWeapon && l->mc.weapons[l->mc.curWeaponIndex].ammo > 0)
     {
+        if(!IsSoundPlaying(l->mc.weapons[l->mc.curWeaponIndex].shootSound)){PlaySound(l->mc.weapons[l->mc.curWeaponIndex].shootSound);}
         ShootRay(l);
         l->mc.weapons[l->mc.curWeaponIndex].ammo -= 1;
     }

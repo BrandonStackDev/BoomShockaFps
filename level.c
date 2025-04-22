@@ -239,8 +239,10 @@ Level LoadLevel(const char *filename)
     Sound bgHit = LoadSound("sounds/bg_hit.mp3");
     Sound bgDeath = LoadSound("sounds/bg_death.mp3");
     Sound bgShoot = LoadSound("sounds/bg_shoot.mp3");
+    Sound shotgunSound = LoadSound("sounds/shotgun.mp3");
+    Sound m1grandSound = LoadSound("sounds/m1grand.mp3");
     printf("sounds malloc\n");
-    level.uniqueSounds = 6;
+    level.uniqueSounds = 8;
     level.uSounds = MemAlloc(sizeof(Sound) * level.uniqueSounds);
     level.uSounds[0] = deathSound;
     level.uSounds[1] = looseSound;
@@ -248,6 +250,8 @@ Level LoadLevel(const char *filename)
     level.uSounds[3] = bgHit;
     level.uSounds[4] = bgDeath;
     level.uSounds[5] = bgShoot;
+    level.uSounds[6] = shotgunSound;
+    level.uSounds[7] = m1grandSound;
 
     printf("mc creation\n");
     //create main character
@@ -297,6 +301,7 @@ Level LoadLevel(const char *filename)
     mc.weapons[WEAPON_M1GRAND].maxDist = 35;
     mc.weapons[WEAPON_M1GRAND].damage = 15;
     mc.weapons[WEAPON_M1GRAND].ammo = 25;
+    mc.weapons[WEAPON_M1GRAND].shootSound = m1grandSound;
     //shotgun
     mc.weapons[WEAPON_SHOTGUN].type = WEAPON_SHOTGUN;//keep index as enum, very important
     strcpy(mc.weapons[WEAPON_SHOTGUN].name, "shotgun");
@@ -306,6 +311,7 @@ Level LoadLevel(const char *filename)
     mc.weapons[WEAPON_SHOTGUN].maxDist = 16;
     mc.weapons[WEAPON_SHOTGUN].damage = 30;
     mc.weapons[WEAPON_SHOTGUN].ammo = 15;
+    mc.weapons[WEAPON_SHOTGUN].shootSound = shotgunSound;
     //mc sounds
     mc.deathSound = deathSound;
     mc.looseSound = looseSound;
