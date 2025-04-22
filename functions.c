@@ -192,7 +192,7 @@ void ShootRay(Level *l)
         l->bg[minIndex].state = BG_STATE_HIT;
         l->bg[minIndex].anim = l->bg[minIndex].type==BG_TYPE_ARMY?ANIM_HIT:ANIM_YETI_ROAR;
         l->bg[minIndex].curFrame = l->bg[minIndex].type==BG_TYPE_ARMY?60:0; //hit anim is delayed with standing still, skip ahead unless yeti
-        if(l->bg[minIndex].health <= 0 || (l->bg[minIndex].type==BG_TYPE_ARMY && headShot))
+        if(l->bg[minIndex].health <= 0 || (l->bg[minIndex].type==BG_TYPE_ARMY && headShot))//bg is dead
         {
             l->bg[minIndex].health = 0;
             l->bg[minIndex].state = BG_STATE_DYING;
@@ -200,7 +200,12 @@ void ShootRay(Level *l)
             l->bg[minIndex].curFrame = 0;
             StartTimer(&l->bg[minIndex].t_yeti_death_wait);
             printf("Bad guy %d dead!\n", minIndex);
+            if(!IsSoundPlaying(l->bg[minIndex].deathSound)){PlaySound(l->bg[minIndex].deathSound);}
         }//mark if dying as needed
+        else //if hit but still alive
+        {
+            if(!IsSoundPlaying(l->bg[minIndex].hitSound)){PlaySound(l->bg[minIndex].hitSound);}
+        }
     }
 }
 
@@ -292,6 +297,7 @@ void HandleBgState(MainCharacter *mc, Enemy *bg)
             {
                 bg->state = BG_STATE_SHOOTING;
                 bg->anim = ANIM_SHOOT;
+                if(!IsSoundPlaying(bg->shootSound)){PlaySound(bg->shootSound);}
             }
         }
         else if(bg->type==BG_TYPE_YETI)
@@ -321,6 +327,7 @@ void HandleBgState(MainCharacter *mc, Enemy *bg)
             bg->anim = bg->type==BG_TYPE_ARMY?ANIM_SHOOT:ANIM_YETI_JUMP;
             bg->curFrame = 0;
             bg->yaw = GetYawToTarget(bg->pos,mc->pos);
+            if(!IsSoundPlaying(bg->shootSound)){PlaySound(bg->shootSound);}
             if(bg->type==BG_TYPE_YETI)//start jump
             {
                 bg->isJumping = true;

@@ -235,11 +235,19 @@ Level LoadLevel(const char *filename)
     printf("sounds\n");
     Sound deathSound = LoadSound("sounds/scream.mp3");
     Sound looseSound = LoadSound("sounds/mc_death.mp3");
+    Sound yetiRoar = LoadSound("sounds/yeti_roar.mp3");
+    Sound bgHit = LoadSound("sounds/bg_hit.mp3");
+    Sound bgDeath = LoadSound("sounds/bg_death.mp3");
+    Sound bgShoot = LoadSound("sounds/bg_shoot.mp3");
     printf("sounds malloc\n");
-    level.uniqueSounds = 2;
+    level.uniqueSounds = 6;
     level.uSounds = MemAlloc(sizeof(Sound) * level.uniqueSounds);
     level.uSounds[0] = deathSound;
     level.uSounds[1] = looseSound;
+    level.uSounds[2] = yetiRoar;
+    level.uSounds[3] = bgHit;
+    level.uSounds[4] = bgDeath;
+    level.uSounds[5] = bgShoot;
 
     printf("mc creation\n");
     //create main character
@@ -427,6 +435,9 @@ Level LoadLevel(const char *filename)
             badguys[bgCount].origHeadBox = box1;
             badguys[bgCount].t_walk_stuck = CreateTimer(8);//walk no more than 8 seconds
             badguys[bgCount].t_yeti_death_wait = CreateTimer(5);//specifically for yetis, but a death timer to help guide fade effects
+            badguys[bgCount].hitSound = bgHit;
+            badguys[bgCount].shootSound = bgShoot;
+            badguys[bgCount].deathSound = bgDeath;
             bgCount++;
         }
         else if(strcmp(entities[i].className,"monster_ogre")==0)//yeti
@@ -455,6 +466,9 @@ Level LoadLevel(const char *filename)
             badguys[bgCount].origHeadBox = box1;
             badguys[bgCount].t_walk_stuck = CreateTimer(8);//walk no more than 8 seconds
             badguys[bgCount].t_yeti_death_wait = CreateTimer(5);//specifically for yetis, but a death timer to help guide fade effects
+            badguys[bgCount].hitSound = yetiRoar;
+            badguys[bgCount].shootSound = yetiRoar;
+            badguys[bgCount].deathSound = yetiRoar;
             bgCount++;
         }
         else if(strcmp(entities[i].className,"weapon_m1grand")==0)

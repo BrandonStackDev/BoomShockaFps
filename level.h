@@ -110,6 +110,9 @@ typedef struct {
     bool isJumping;
     Timer t_walk_stuck;
     Timer t_yeti_death_wait;
+    Sound hitSound;
+    Sound shootSound;
+    Sound deathSound;
 } Enemy;
 
 typedef struct {
