@@ -50,6 +50,9 @@ typedef struct {
     Timer t_crouch_wait;
     Timer t_collDamage_wait;
     Timer t_endLevel_wait;
+    Sound selectSound;
+    Sound enterSound;
+    Sound playSound;
 } GameState;
 
 //functions
@@ -59,5 +62,7 @@ void UpdateMainMenu(GameState *gs);
 void UpdateOptionsMenu(GameState *gs, Level *l);
 void UpdateLevelSelect(GameState *gs, Level *l);
 void UpdateInGameMenu(GameState *gs, Level *l);
+void LoadGameStateSounds(GameState *gs);
+void UnloadGameStateSounds(GameState *gs);
 
 #endif // GAME_H

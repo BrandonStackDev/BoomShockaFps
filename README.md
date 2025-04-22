@@ -110,6 +110,9 @@ If you are interested in GameDev and want to get into these tools:
         - used in conjuction with the map_parser.c file, creates really simple but powerful and scale-able geometry
         - I use regular Quake .map files becuase they are simple
         - I use classname and subtype to control textures, raylib doesnt really support per face textures
+ - Sounds
+    - freesound - (https://freesound.org) --good collection with commons license
+    - Audacity - (https://www.audacityteam.org/) -- great free sound editor
 
 ## future enhancements, etc...
 

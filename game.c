@@ -11,6 +11,18 @@
 #include <stdio.h>
 #include <string.h>
 
+void LoadGameStateSounds(GameState *gs)
+{
+    gs->selectSound=LoadSound("sounds/select.mp3");
+    gs->enterSound=LoadSound("sounds/enter.mp3");
+    gs->playSound=LoadSound("sounds/play.mp3");
+}
+void UnloadGameStateSounds(GameState *gs)
+{
+    UnloadSound(gs->selectSound);
+    UnloadSound(gs->enterSound);
+    UnloadSound(gs->playSound);
+}
 
 void UpdateMainMenu(GameState *gs) {
     BeginDrawing();
@@ -23,10 +35,12 @@ void UpdateMainMenu(GameState *gs) {
         if (IsKeyPressed(KEY_DOWN)) 
         {
             gs->menuSelection = (gs->menuSelection + 1) % gs->menuCount;
+            PlaySound(gs->selectSound);
         }
         if (IsKeyPressed(KEY_UP)) 
         {
             gs->menuSelection = (gs->menuSelection - 1 + gs->menuCount) % gs->menuCount;
+            PlaySound(gs->selectSound);
         }
 
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) 
@@ -36,6 +50,7 @@ void UpdateMainMenu(GameState *gs) {
                 case 1: gs->screen  = SCREEN_OPTIONS; break;
                 case 2: gs->screen  = SCREEN_EXIT; break;
             }
+            PlaySound(gs->enterSound);
         }
 
         // Draw menu
@@ -57,6 +72,7 @@ void UpdateOptionsMenu(GameState *gs, Level *l)
         // Difficulty toggle
         if (IsKeyPressed(KEY_D)) {
             gs->diff = (gs->diff + 1) % 3;
+            PlaySound(gs->selectSound);
         }
 
         const char* difficultyText = (gs->diff == DIFFICULTY_EASY) ? "Easy" :
@@ -66,6 +82,7 @@ void UpdateOptionsMenu(GameState *gs, Level *l)
         // Y Inversion toggle
         if (IsKeyPressed(KEY_Y)) {
             gs->invertY = !gs->invertY;
+            PlaySound(gs->selectSound);
         }
 
         DrawText(TextFormat("Y Inversion: %s (press Y)", gs->invertY ? "On" : "Off"), 100, 200, 20, WHITE);
@@ -74,6 +91,7 @@ void UpdateOptionsMenu(GameState *gs, Level *l)
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) {
             if(l->loaded){gs->screen = SCREEN_IN_GAME_MENU;}
             else{gs->screen = SCREEN_MENU;}
+            PlaySound(gs->enterSound);
         }
     EndDrawing();
 }
@@ -87,14 +105,17 @@ void UpdateLevelSelect(GameState *gs, Level *l) {
         if (IsKeyPressed(KEY_DOWN)) 
         {
             gs->levelSelection = (gs->levelSelection + 1) % gs->levelCount;
+            PlaySound(gs->selectSound);
         }
         if (IsKeyPressed(KEY_UP)) 
         {
             gs->levelSelection = (gs->levelSelection - 1 + gs->levelCount) % gs->levelCount;
+            PlaySound(gs->selectSound);
         }
 
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) 
         {
+            PlaySound(gs->playSound);
             if(l->loaded)
             {
                 printf("Unloading level ...\n");
@@ -128,10 +149,12 @@ void UpdateInGameMenu(GameState *gs, Level *l)
         if (IsKeyPressed(KEY_DOWN)) 
         {
             gs->menuInGameSelection = (gs->menuInGameSelection + 1) % gs->menuInGameCount;
+            PlaySound(gs->selectSound);
         }
         if (IsKeyPressed(KEY_UP)) 
         {
             gs->menuInGameSelection = (gs->menuInGameSelection - 1 + gs->menuInGameCount) % gs->menuInGameCount;
+            PlaySound(gs->selectSound);
         }
 
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) 
@@ -142,6 +165,7 @@ void UpdateInGameMenu(GameState *gs, Level *l)
                 case 2: gs->screen  = SCREEN_LEVEL_SELECT; break;
                 case 3: gs->screen  = SCREEN_EXIT; break;
             }
+            PlaySound(gs->enterSound);
         }
 
         // Draw menu

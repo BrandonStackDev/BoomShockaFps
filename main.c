@@ -82,6 +82,7 @@ void GameLoop(void)
         case SCREEN_EXIT:
             if(l.loaded){UnloadLevel(&l);}
             MemFree(gs.levels);
+            UnloadGameStateSounds(&gs);
             CloseWindow();
             #ifdef PLATFORM_WEB
                 emscripten_force_exit(0);
@@ -135,6 +136,8 @@ int main(void)
     gs.t_collDamage_wait.virgin = false;
     gs.t_endLevel_wait = CreateTimer(5.0f);
     gs.t_endLevel_wait.virgin = false;
+    //game state sounds
+    LoadGameStateSounds(&gs);
 
     #ifdef PLATFORM_WEB
         emscripten_set_main_loop(GameLoop, 0, 1);
@@ -147,6 +150,7 @@ int main(void)
     
     if(l.loaded){UnloadLevel(&l);}
     MemFree(gs.levels);
+    UnloadGameStateSounds(&gs);
     CloseWindow();
 
     #ifdef PLATFORM_WEB
