@@ -474,7 +474,7 @@ void DrawGame(GameState *gs, Level *l)
         //handle end level sequences
         if(deadBgCount >= l->bgCount) //for debugging this || true)
         {
-            DrawText(TextFormat("All Enemies killed!"), (SCREEN_WIDTH/2.0f)-200, SCREEN_HEIGHT/2.0f, 50, BLOODRED);
+            DrawText(TextFormat("Level Cleared!"), (SCREEN_WIDTH/2.0f)-200, SCREEN_HEIGHT/2.0f, 50, BLOODRED);
             if(!gs->t_endLevel_wait.wasStarted)
             {
                 StartTimer(&gs->t_endLevel_wait);
@@ -493,6 +493,7 @@ void DrawGame(GameState *gs, Level *l)
             if(!gs->t_endLevel_wait.wasStarted)
             {
                 StartTimer(&gs->t_endLevel_wait);
+                PlaySound(l->mc.looseSound);
             }
             else if(HasTimerElapsed(&gs->t_endLevel_wait, time(0)))
             {

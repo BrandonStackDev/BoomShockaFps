@@ -179,6 +179,7 @@ typedef struct {
     int score;
     int lives;
     Sound deathSound;
+    Sound looseSound;
 } MainCharacter;
 
 typedef struct {
