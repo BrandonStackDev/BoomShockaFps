@@ -74,7 +74,6 @@ void UpdateOptionsMenu(GameState *gs, Level *l)
             gs->diff = (gs->diff + 1) % 3;
             PlaySound(gs->selectSound);
         }
-
         const char* difficultyText = (gs->diff == DIFFICULTY_EASY) ? "Easy" :
                                     (gs->diff == DIFFICULTY_NORMAL) ? "Normal" : "Hard";
         DrawText(TextFormat("Difficulty: %s (press D)", difficultyText), 100, 150, 20, WHITE);
@@ -84,10 +83,16 @@ void UpdateOptionsMenu(GameState *gs, Level *l)
             gs->invertY = !gs->invertY;
             PlaySound(gs->selectSound);
         }
-
         DrawText(TextFormat("Y Inversion: %s (press Y)", gs->invertY ? "On" : "Off"), 100, 200, 20, WHITE);
 
-        DrawText("Press ENTER to make selections and go back", 100, 300, 20, WHITE);
+        // Q Quick Fire toggle
+        if (IsKeyPressed(KEY_Q)) {
+            gs->quickFire = !gs->quickFire;
+            PlaySound(gs->selectSound);
+        }
+        DrawText(TextFormat("Quick Fire: %s (press Q)", gs->quickFire ? "On" : "Off"), 100, 250, 20, WHITE);
+
+        DrawText("Press ENTER to make selections and go back", 100, 350, 20, WHITE);
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) {
             if(l->loaded){gs->screen = SCREEN_IN_GAME_MENU;}
             else{gs->screen = SCREEN_MENU;}
@@ -220,7 +225,7 @@ void UpdateGame(GameState *gs, Level *l)
     for(int i=0; i<l->bgCount; i++)
     {
         l->bg[i].oldPos = l->bg[i].pos;//store this here
-        HandleBgState(&l->mc, &l->bg[i]);
+        HandleBgState(l, &l->mc, &l->bg[i], i);
     }
     // Movement
     l->mc.oldPos = l->mc.pos;//store old pos
@@ -251,9 +256,12 @@ void UpdateGame(GameState *gs, Level *l)
     }
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && l->mc.hasAnyWeapon && l->mc.weapons[l->mc.curWeaponIndex].ammo > 0)
     {
-        if(!IsSoundPlaying(l->mc.weapons[l->mc.curWeaponIndex].shootSound)){PlaySound(l->mc.weapons[l->mc.curWeaponIndex].shootSound);}
-        ShootRay(l);
-        l->mc.weapons[l->mc.curWeaponIndex].ammo -= 1;
+        if(!IsSoundPlaying(l->mc.weapons[l->mc.curWeaponIndex].shootSound)||gs->quickFire)
+        {
+            PlaySound(l->mc.weapons[l->mc.curWeaponIndex].shootSound);
+            ShootRay(l);
+            l->mc.weapons[l->mc.curWeaponIndex].ammo -= 1;
+        }
     }
     if (IsKeyPressed(KEY_RIGHT) && l->mc.hasAnyWeapon) 
     {
@@ -359,6 +367,11 @@ void UpdateGame(GameState *gs, Level *l)
             l->bg[i].curFrame = 0;
             if(l->bg[i].type == BG_TYPE_ARMY){HandleBgArmyAnimEnd(&l->bg[i],l,gs,i);}
             else if (l->bg[i].type == BG_TYPE_YETI){HandleBgYetiAnimEnd(&l->bg[i],l,gs);}
+        }
+        if(l->bg[i].type==BG_TYPE_ARMY && l->bg[i].anim==ANIM_SHOOT && l->bg[i].curFrame==25)// && !IsSoundPlaying(l->bg[i].shootSound))
+        {
+            printf("bg army shot sound coming from %d %s\n",i,l->bg[i].isShooter?"shooter":"walker");
+            PlaySound(l->bg[i].shootSound);
         }
     }
     //-----------END BADGUY ANIMS--------------------------------------------------------------------

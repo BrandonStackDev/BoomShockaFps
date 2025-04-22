@@ -113,6 +113,8 @@ int main(void)
     gs = (GameState){0};
     //set the mouse capture to true, because we capture the moue by default
     gs.isMouseCaptured = true;
+    //set quick fire to true, I found I like it much better
+    gs.quickFire = true;
     //screen and menu setup
     gs.screen = SCREEN_MENU;
     gs.menuCount = 3;

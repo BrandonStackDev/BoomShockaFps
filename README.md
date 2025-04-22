@@ -70,7 +70,12 @@ In game controls.
 In Menu controls,
  - arrow up and down to select
  - ENTER to submit
- - in options D is toggle difficulty and Y is toggle y-inversion
+ - in options 
+    - D is toggle difficulty
+    - Y is toggle y-inversion
+    - Q is toggle Quick Fire (defaults to true)
+        - quick fire enabled means you can fire as quickly as you want
+        - disabled means you have to let the weapon recharge (timed to the sound effect of firing)
 
 ## tools
 

@@ -28,7 +28,7 @@ float RandRange(float min, float max);
 Vector3 GetRandomRunTarget(Vector3 origin, float minDist, float maxDist);
 float GetYawToTarget(Vector3 from, Vector3 to);
 void HandleBgShotPlayer(Level *l, GameState *gs, int enemyIndex);
-void HandleBgState(MainCharacter *mc, Enemy *bg);
+void HandleBgState(Level *l, MainCharacter *mc, Enemy *bg, int index);
 void HandleBgArmyAnimEnd(Enemy *bg, Level *l, GameState *gs, int i);
 void HandleBgYetiAnimEnd(Enemy *bg,Level *l, GameState *gs);
 bool IsWithinDistance(Vector3 a, Vector3 b, float maxDist);
@@ -36,5 +36,6 @@ Frustum ExtractFrustum(Matrix mat);
 bool IsBoxInFrustum(BoundingBox box, Frustum frustum);
 void DrawCustomFPS(int x, int y, Color color);
 void DrawHeart(Vector2 position, float size, Color color);
+bool BgLineOfSightToMc(Level *l, Enemy *bg, int index);
 
 #endif // FUNCTIONS_H

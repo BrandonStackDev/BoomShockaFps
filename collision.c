@@ -3,6 +3,7 @@
 #include "rlgl.h"
 #include "level.h"
 #include "game.h"
+#include "functions.h"
 #include "collision.h"
 #include <stdio.h>
 #include <stdlib.h> 
@@ -670,11 +671,14 @@ void HandleBgPlatCollision(Enemy* bg, Level* l)
     {
         bg->isFalling = true;
         if(bg->type==BG_TYPE_ARMY && bg->state==BG_STATE_WALKING)//I have isFalling, but soldiers should never fall off the platform this way
-        {
+        {//in the future, give this line of sight check from functions.c
             bg->pos = bg->oldPos;
-            bg->state=BG_STATE_SHOOTING;
-            bg->anim=ANIM_SHOOT;
-            bg->curFrame = 0;
+            if(!bg->isShooter && BgLineOfSightToMc(l,bg,-1))
+            {
+                bg->state=BG_STATE_SHOOTING;
+                bg->anim=ANIM_SHOOT;
+                bg->curFrame = 0;
+            }
         }
     }
     if(sideColl && bg->state == BG_STATE_WALKING)

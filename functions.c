@@ -14,73 +14,79 @@
 
 void DrawTriangles(Model *m, bool useOrigin, Vector3 origin)
 {
-    int triangleCount = m->meshes[0].triangleCount;
-    float *vertices = m->meshes[0].vertices;
-    for (int i = 0; i < triangleCount; i++) {
-        Vector3 v0 = {
-            vertices[(i * 3 + 0) * 3 + 0],
-            vertices[(i * 3 + 0) * 3 + 1],
-            vertices[(i * 3 + 0) * 3 + 2]
-        };
-        Vector3 v1 = {
-            vertices[(i * 3 + 1) * 3 + 0],
-            vertices[(i * 3 + 1) * 3 + 1],
-            vertices[(i * 3 + 1) * 3 + 2]
-        };
-        Vector3 v2 = {
-            vertices[(i * 3 + 2) * 3 + 0],
-            vertices[(i * 3 + 2) * 3 + 1],
-            vertices[(i * 3 + 2) * 3 + 2]
-        };
-        if(useOrigin)
-        {
-            v0 = Vector3Add(v0,origin);
-            v1 = Vector3Add(v1,origin);
-            v2 = Vector3Add(v2,origin);
+    for(int j=0; j<m->meshCount; j++)
+    {
+        int triangleCount = m->meshes[j].triangleCount;
+        float *vertices = m->meshes[j].vertices;
+        for (int i = 0; i < triangleCount; i++) {
+            Vector3 v0 = {
+                vertices[(i * 3 + 0) * 3 + 0],
+                vertices[(i * 3 + 0) * 3 + 1],
+                vertices[(i * 3 + 0) * 3 + 2]
+            };
+            Vector3 v1 = {
+                vertices[(i * 3 + 1) * 3 + 0],
+                vertices[(i * 3 + 1) * 3 + 1],
+                vertices[(i * 3 + 1) * 3 + 2]
+            };
+            Vector3 v2 = {
+                vertices[(i * 3 + 2) * 3 + 0],
+                vertices[(i * 3 + 2) * 3 + 1],
+                vertices[(i * 3 + 2) * 3 + 2]
+            };
+            if(useOrigin)
+            {
+                v0 = Vector3Add(v0,origin);
+                v1 = Vector3Add(v1,origin);
+                v2 = Vector3Add(v2,origin);
+            }
+            //DrawTriangle3D(v0,v1,v2,RED);
+            DrawLine3D(v0,v1,RED);
+            DrawLine3D(v1,v2,RED);
+            DrawLine3D(v2,v0,RED);
         }
-        //DrawTriangle3D(v0,v1,v2,RED);
-        DrawLine3D(v0,v1,RED);
-        DrawLine3D(v1,v2,RED);
-        DrawLine3D(v2,v0,RED);
     }
 }
 
 void DrawTrianglesIndexed(Model *m, bool useOrigin, Vector3 origin)
 {
-    int triangleCount = m->meshes[0].triangleCount;
-    float *vertices = m->meshes[0].vertices;
-    unsigned short *indices = m->meshes[0].indices;  // Check the format if not ushort
+    for(int j=0; j<m->meshCount; j++)
+    {
+        int triangleCount = m->meshes[j].triangleCount;
+        float *vertices = m->meshes[j].vertices;
+        unsigned short *indices = m->meshes[j].indices;  // Check the format if not ushort
 
-    for (int i = 0; i < triangleCount; i++) {
-        int i0 = indices[i * 3 + 0];
-        int i1 = indices[i * 3 + 1];
-        int i2 = indices[i * 3 + 2];
+        for (int i = 0; i < triangleCount; i++) {
+            int i0 = indices[i * 3 + 0];
+            int i1 = indices[i * 3 + 1];
+            int i2 = indices[i * 3 + 2];
 
-        Vector3 v0 = {
-            vertices[i0 * 3 + 0],
-            vertices[i0 * 3 + 1],
-            vertices[i0 * 3 + 2]
-        };
-        Vector3 v1 = {
-            vertices[i1 * 3 + 0],
-            vertices[i1 * 3 + 1],
-            vertices[i1 * 3 + 2]
-        };
-        Vector3 v2 = {
-            vertices[i2 * 3 + 0],
-            vertices[i2 * 3 + 1],
-            vertices[i2 * 3 + 2]
-        };
+            Vector3 v0 = {
+                vertices[i0 * 3 + 0],
+                vertices[i0 * 3 + 1],
+                vertices[i0 * 3 + 2]
+            };
+            Vector3 v1 = {
+                vertices[i1 * 3 + 0],
+                vertices[i1 * 3 + 1],
+                vertices[i1 * 3 + 2]
+            };
+            Vector3 v2 = {
+                vertices[i2 * 3 + 0],
+                vertices[i2 * 3 + 1],
+                vertices[i2 * 3 + 2]
+            };
 
-        if (useOrigin) {
-            v0 = Vector3Add(v0, origin);
-            v1 = Vector3Add(v1, origin);
-            v2 = Vector3Add(v2, origin);
+            if (useOrigin) {
+                v0 = Vector3Add(v0, origin);
+                v1 = Vector3Add(v1, origin);
+                v2 = Vector3Add(v2, origin);
+            }
+
+            DrawLine3D(v0, v1, RED);
+            DrawLine3D(v1, v2, RED);
+            DrawLine3D(v2, v0, RED);
         }
-
-        DrawLine3D(v0, v1, RED);
-        DrawLine3D(v1, v2, RED);
-        DrawLine3D(v2, v0, RED);
     }
 }
 
@@ -274,7 +280,7 @@ void HandleBgShotPlayer(Level *l, GameState *gs, int enemyIndex)
     if(RandRange(0,4)>thresh){l->mc.health-=damage;}//todo: sound
 }
 
-void HandleBgState(MainCharacter *mc, Enemy *bg)
+void HandleBgState(Level *l, MainCharacter *mc, Enemy *bg, int index)
 {
     if(bg->dead){return;}
     if(bg->state == BG_STATE_STILL && Vector3Distance(mc->pos, bg->pos) < BG_TO_MC_WAKE_UP_DIST)
@@ -283,6 +289,7 @@ void HandleBgState(MainCharacter *mc, Enemy *bg)
     }
     else if(bg->state == BG_STATE_PLANNING)
     {
+        bool los = BgLineOfSightToMc(l,bg,index);
         if(Vector3Distance(mc->pos, bg->pos) > BG_TO_MC_WAKE_UP_DIST)
         {
             bg->state = BG_STATE_STILL;
@@ -290,15 +297,19 @@ void HandleBgState(MainCharacter *mc, Enemy *bg)
         }
         if(bg->type==BG_TYPE_ARMY)
         {
-            bg->targetPos = GetRandomRunTarget(bg->pos, 4, 10);
+            bg->targetPos = bg->isShooter?mc->pos:GetRandomRunTarget(bg->pos, 4, 10);//needed otherwise they spin sometimes
             bg->state = BG_STATE_WALKING;
             bg->anim = ANIM_WALKING;
-            if(bg->isShooter)//shooter stands his ground, no walking, just shoot
+            if(bg->isShooter && los)//shooter stands his ground, no walking, just shoot
             {
                 bg->state = BG_STATE_SHOOTING;
                 bg->anim = ANIM_SHOOT;
-                if(!IsSoundPlaying(bg->shootSound)){PlaySound(bg->shootSound);}
             }
+            else if(bg->isShooter)
+            {
+                bg->state = BG_STATE_PLANNING;
+                return;
+            }//for shooters that dont have line of sight, skip the yaw stuff, otherwise, sometimes they spin
         }
         else if(bg->type==BG_TYPE_YETI)
         {
@@ -307,7 +318,7 @@ void HandleBgState(MainCharacter *mc, Enemy *bg)
             bg->anim = ANIM_YETI_WALK;  
         }
         bg->curFrame = 0;
-        bg->yaw = GetYawToTarget(bg->pos,bg->targetPos);
+        if(los || bg->type==BG_TYPE_YETI){bg->yaw = GetYawToTarget(bg->pos,bg->targetPos);}
         StartTimer(&bg->t_walk_stuck);
     }
     else if(bg->state == BG_STATE_WALKING)
@@ -323,26 +334,33 @@ void HandleBgState(MainCharacter *mc, Enemy *bg)
             || HasTimerElapsed(&bg->t_walk_stuck,time(0)))
         {
             ResetTimer(&bg->t_walk_stuck);
-            bg->state = BG_STATE_SHOOTING;
-            bg->anim = bg->type==BG_TYPE_ARMY?ANIM_SHOOT:ANIM_YETI_JUMP;
-            bg->curFrame = 0;
-            bg->yaw = GetYawToTarget(bg->pos,mc->pos);
-            if(!IsSoundPlaying(bg->shootSound)){PlaySound(bg->shootSound);}
-            if(bg->type==BG_TYPE_YETI)//start jump
+            if(BgLineOfSightToMc(l,bg,index))
             {
-                bg->isJumping = true;
-                bg->yVelocity = YETI_JUMP_FORCE;
-                bg->jumpMove = Vector3Subtract(mc->pos, bg->pos);
-                bg->jumpMove.y = 0; //we only want the x and z of the player to jump toward
-                //we need to update the y here so isJumping isnt immedialty set to false by collision
-                Vector3 m = Vector3Normalize(bg->jumpMove);
-                m = Vector3Scale(m, bg->jumpSpeed * GetFrameTime());
-                bg->pos = Vector3Add(bg->pos, m);
-                bg->pos.y += bg->yVelocity * GetFrameTime();
-                bg->yVelocity -= GRAVITY;
-                bg->box = UpdateBoundingBox(bg->origBox,bg->pos);
-                bg->bodyBox = UpdateBoundingBox(bg->origBodyBox,bg->pos);
-                bg->headBox = UpdateBoundingBox(bg->origHeadBox,bg->pos);
+                bg->state = BG_STATE_SHOOTING;
+                bg->anim = bg->type==BG_TYPE_ARMY?ANIM_SHOOT:ANIM_YETI_JUMP;
+                bg->curFrame = 0;
+                bg->yaw = GetYawToTarget(bg->pos,mc->pos);
+                if(bg->type==BG_TYPE_YETI && !IsSoundPlaying(bg->shootSound)){PlaySound(bg->shootSound);}//yeti shoot sound is handled here, army is in game.c in the updaetGame, bg animations section
+                if(bg->type==BG_TYPE_YETI)//start jump
+                {
+                    bg->isJumping = true;
+                    bg->yVelocity = YETI_JUMP_FORCE;
+                    bg->jumpMove = Vector3Subtract(mc->pos, bg->pos);
+                    bg->jumpMove.y = 0; //we only want the x and z of the player to jump toward
+                    //we need to update the y here so isJumping isnt immedialty set to false by collision
+                    Vector3 m = Vector3Normalize(bg->jumpMove);
+                    m = Vector3Scale(m, bg->jumpSpeed * GetFrameTime());
+                    bg->pos = Vector3Add(bg->pos, m);
+                    bg->pos.y += bg->yVelocity * GetFrameTime();
+                    bg->yVelocity -= GRAVITY;
+                    bg->box = UpdateBoundingBox(bg->origBox,bg->pos);
+                    bg->bodyBox = UpdateBoundingBox(bg->origBodyBox,bg->pos);
+                    bg->headBox = UpdateBoundingBox(bg->origHeadBox,bg->pos);
+                }
+            }
+            else //if no line of sight, he goes back to planning mode
+            {
+                bg->state = BG_STATE_PLANNING;
             }
         }
     }
@@ -525,6 +543,49 @@ void DrawHeart(Vector2 position, float size, Color color)
 
     // Clockwise order: p1 -> p2 -> p3
     DrawTriangle(p1, p2, p3, color);
+}
+
+//returns true if bg has line of sight to mc
+bool BgLineOfSightToMc(Level *l, Enemy *bg, int index)
+{
+    // Step 1: Create a ray from the camera and detect collision (should always hit)
+    Vector3 origin = bg->pos;
+    Vector3 direction = Vector3Normalize(Vector3Subtract(l->mc.pos, bg->pos));
+    Vector3 direction2 = Vector3Normalize(Vector3Subtract(l->mc.camera.position, bg->pos));
+    Ray bulletRay = (Ray){ origin, direction };
+    Ray bulletRay2 = (Ray){ origin, direction2 };
+    RayCollision mcColl = GetRayCollisionBox(bulletRay, l->mc.box);
+    //report if its not a hit because that is strange
+    if(!mcColl.hit){printf("BgLineOfSightToMc, no hit on MC?\n");}
+    // step 2: check if collision hits walls instead
+    for(int i=0; i<l->objCount; i++)
+    {
+        if(l->obj[i].useHitBoxes)
+        {
+            for(int j=0; j<l->obj[i].hitBoxCount; j++)
+            {
+                RayCollision coll = GetRayCollisionBox(bulletRay, l->obj[i].hitBoxes[j]);
+                RayCollision coll2 = GetRayCollisionBox(bulletRay2, l->obj[i].hitBoxes[j]);
+                if(coll.hit && coll.distance < mcColl.distance && coll2.hit && coll2.distance < mcColl.distance)
+                {
+                    //printf("bg cant see mc because of BB\n");
+                    return false;
+                } 
+            }
+        }
+        else
+        {
+            RayCollision coll = GetRayCollisionBox(bulletRay, l->obj[i].box);
+            RayCollision coll2 = GetRayCollisionBox(bulletRay2, l->obj[i].box);
+            if(coll.hit && coll.distance < mcColl.distance && coll2.hit && coll2.distance < mcColl.distance)
+            {
+                //printf("bg cant see mc because of wall\n");
+                return false;
+            }
+        }
+    }
+    //printf("bg %d can see mc\n",index);
+    return true;
 }
 
 

@@ -38,6 +38,7 @@ typedef struct {
     bool invertY;
     bool showBoxes;
     bool drawTri;
+    bool quickFire;
     int menuSelection;
     int menuCount; // Play, Options, Exit
     int menuInGameSelection;
