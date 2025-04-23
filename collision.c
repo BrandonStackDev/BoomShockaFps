@@ -672,7 +672,7 @@ void HandleBgPlatCollision(Enemy* bg, Level* l)
     {
         bg->isFalling = true;
         if(bg->type==BG_TYPE_ARMY && bg->state==BG_STATE_WALKING)//I have isFalling, but soldiers should never fall off the platform this way
-        {//in the future, give this line of sight check from functions.c
+        {
             bg->pos = bg->oldPos;
             if(!bg->isShooter && BgLineOfSightToMc(l,bg,-1))
             {

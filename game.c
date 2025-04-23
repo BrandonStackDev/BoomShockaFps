@@ -370,7 +370,7 @@ void UpdateGame(GameState *gs, Level *l)
         }
         if(l->bg[i].type==BG_TYPE_ARMY && l->bg[i].anim==ANIM_SHOOT && l->bg[i].curFrame==25)// && !IsSoundPlaying(l->bg[i].shootSound))
         {
-            printf("bg army shot sound coming from %d %s\n",i,l->bg[i].isShooter?"shooter":"walker");
+            //printf("bg army shot sound coming from %d %s\n",i,l->bg[i].isShooter?"shooter":"walker");
             PlaySound(l->bg[i].shootSound);
         }
     }
