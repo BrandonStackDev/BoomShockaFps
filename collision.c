@@ -265,6 +265,7 @@ void HandleObjectCollision(MainCharacter* mc, EnvObject* obj)
         mc->isJumping = false;
         mc->isFalling = false;
         mc->isOnPlatform = true;
+        if(wasJumping && !IsSoundPlaying(mc->landSound)){PlaySound(mc->landSound);}
     }
     if ((hitCeiling && !hitSide)||(hitCeiling && wasJumping)) {//ugh
         //printf("Collision type: COLLISION_BOTTOM\n");

@@ -241,8 +241,9 @@ Level LoadLevel(const char *filename)
     Sound bgShoot = LoadSound("sounds/bg_shoot.mp3");
     Sound shotgunSound = LoadSound("sounds/shotgun.mp3");
     Sound m1grandSound = LoadSound("sounds/m1grand.mp3");
+    Sound landSound = LoadSound("sounds/land.mp3");
     printf("sounds malloc\n");
-    level.uniqueSounds = 8;
+    level.uniqueSounds = 9;
     level.uSounds = MemAlloc(sizeof(Sound) * level.uniqueSounds);
     level.uSounds[0] = deathSound;
     level.uSounds[1] = looseSound;
@@ -252,6 +253,7 @@ Level LoadLevel(const char *filename)
     level.uSounds[5] = bgShoot;
     level.uSounds[6] = shotgunSound;
     level.uSounds[7] = m1grandSound;
+    level.uSounds[8] = landSound;
 
     printf("mc creation\n");
     //create main character
@@ -315,6 +317,7 @@ Level LoadLevel(const char *filename)
     //mc sounds
     mc.deathSound = deathSound;
     mc.looseSound = looseSound;
+    mc.landSound = landSound;
     //set important stuff
     mc.score=0;//starts fresh every level load
     mc.lives=3;//always starts at 3

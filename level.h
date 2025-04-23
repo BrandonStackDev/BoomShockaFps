@@ -184,6 +184,7 @@ typedef struct {
     int lives;
     Sound deathSound;
     Sound looseSound;
+    Sound landSound;
 } MainCharacter;
 
 typedef struct {
