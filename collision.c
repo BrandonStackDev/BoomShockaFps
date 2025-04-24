@@ -418,12 +418,14 @@ void HandleItemCollision(MainCharacter* mc, Item* item)
             mc->hasAnyWeapon = true;
             mc->curWeaponIndex = WEAPON_M1GRAND;
             mc->weapons[WEAPON_M1GRAND].have = true;
+            PlaySound(mc->reloadSound);
         }
         else if(item->type==ITEM_AMMO_M1GRAND)
         {
             if(mc->hasAnyWeapon && mc->weapons[WEAPON_M1GRAND].have)
             {
                 mc->weapons[WEAPON_M1GRAND].ammo += 25; //todo: max ammo? reload?
+                PlaySound(mc->reloadSound);
             }
             else {item->isCollected = false;} //only collect if you have m1grand
         }
@@ -432,12 +434,14 @@ void HandleItemCollision(MainCharacter* mc, Item* item)
             mc->hasAnyWeapon = true;
             mc->curWeaponIndex = WEAPON_SHOTGUN;
             mc->weapons[WEAPON_SHOTGUN].have = true;
+            PlaySound(mc->reloadSound);
         }
         else if(item->type==ITEM_AMMO_SHOTGUN)
         {
             if(mc->hasAnyWeapon && mc->weapons[WEAPON_SHOTGUN].have)
             {
                 mc->weapons[WEAPON_SHOTGUN].ammo += 15; //todo: max ammo? reload?
+                PlaySound(mc->reloadSound);
             }
             else {item->isCollected = false;} //only collect if you have m1grand
         }
@@ -446,6 +450,7 @@ void HandleItemCollision(MainCharacter* mc, Item* item)
             if(mc->health < mc->maxHealth)
             {
                 mc->health = mc->maxHealth; //todo: limit this?
+                PlaySound(mc->healthSound);
             }
             else {item->isCollected = false;} //only collect if you have need of health
         }
