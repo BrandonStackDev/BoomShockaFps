@@ -2,7 +2,7 @@
 
 This is a simple First Person Shooter game, written in c with raylib.
 
-I am new to GameDev, this is my third game. I am so far about 4 weeks into the project.
+I am new to GameDev, this is my third game.
 
 I run on a raspberry pi4.
 
