@@ -16,18 +16,20 @@ void LoadGameStateSounds(GameState *gs)
     gs->selectSound=LoadSound("sounds/select.mp3");
     gs->enterSound=LoadSound("sounds/enter.mp3");
     gs->playSound=LoadSound("sounds/play.mp3");
+    gs->music = LoadMusicStream("sounds/game_music.mp3");
 }
 void UnloadGameStateSounds(GameState *gs)
 {
     UnloadSound(gs->selectSound);
     UnloadSound(gs->enterSound);
     UnloadSound(gs->playSound);
+    UnloadMusicStream(gs->music);
 }
 
 void UpdateMainMenu(GameState *gs) {
     BeginDrawing();
         ClearBackground(BLACK);
-        DrawText("BoomShocka!", 100, 50, 40, WHITE);
+        DrawText("BoomShockaFPS!", 100, 50, 40, WHITE);
         // Menu items
         const char *menuItems[] = { "Play", "Options", "Exit" };
 
@@ -92,7 +94,23 @@ void UpdateOptionsMenu(GameState *gs, Level *l)
         }
         DrawText(TextFormat("Quick Fire: %s (press Q)", gs->quickFire ? "On" : "Off"), 100, 250, 20, WHITE);
 
-        DrawText("Press ENTER to make selections and go back", 100, 350, 20, WHITE);
+        // p toggles music
+        if (IsKeyPressed(KEY_P)) {
+            if(gs->playMusic) //turn it off
+            {
+                gs->playMusic = false;
+                SetMusicVolume(gs->music, 0.0f);
+            }
+            else //turn it back on
+            {
+                gs->playMusic = true;
+                SetMusicVolume(gs->music, 1.0f);
+            }
+            PlaySound(gs->selectSound);
+        }
+        DrawText(TextFormat("Play Music: %s (press P)", gs->playMusic ? "On" : "Off"), 100, 300, 20, WHITE);
+
+        DrawText("Press ENTER to make selections and go back", 100, 400, 20, WHITE);
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) {
             if(l->loaded){gs->screen = SCREEN_IN_GAME_MENU;}
             else{gs->screen = SCREEN_MENU;}

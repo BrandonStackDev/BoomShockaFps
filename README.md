@@ -76,6 +76,7 @@ In Menu controls,
     - Q is toggle Quick Fire (defaults to true)
         - quick fire enabled means you can fire as quickly as you want
         - disabled means you have to let the weapon recharge (timed to the sound effect of firing)
+    - P is toggle play music (will just mute it, so it actually keeps play)
 
 ## tools
 
@@ -118,6 +119,7 @@ If you are interested in GameDev and want to get into these tools:
  - Sounds
     - freesound - (https://freesound.org) --good collection with commons license
     - Audacity - (https://www.audacityteam.org/) -- great free sound editor
+    - Game Music - The music for the game is old stuff I used to write, and from FlannelKat, my band in college and highschool.
 
 ## future enhancements, etc...
 
@@ -140,6 +142,7 @@ If you are interested in GameDev and want to get into these tools:
   - variable weather and time of day, at least background colors could change
   - objects that you can interact with like opening doors, etc...
   - Fix DeepCopyModel and DeepCopyMesh functions
+  - music pauses when the level is loading, do I want to actually fix this tho...?
 
 The main thing that could be improved right now is my asset collection, 
 some of them are way too big (the yeti is like 8k triangles).

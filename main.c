@@ -40,6 +40,8 @@ void SetWorkingDirectoryToAppResources()
 
 void GameLoop(void) 
 {
+    //update music so it keeps playing
+    UpdateMusicStream(gs.music);
     //always, in any screen, M will toggle mouse capture
     if(IsKeyPressed(KEY_M))
     {
@@ -54,6 +56,7 @@ void GameLoop(void)
             gs.isMouseCaptured = true;
         }
     }
+    //switch on screens
     switch (gs.screen) 
     {
         case SCREEN_MENU:
@@ -83,6 +86,7 @@ void GameLoop(void)
             if(l.loaded){UnloadLevel(&l);}
             MemFree(gs.levels);
             UnloadGameStateSounds(&gs);
+            CloseAudioDevice();
             CloseWindow();
             #ifdef PLATFORM_WEB
                 emscripten_force_exit(0);
@@ -99,7 +103,7 @@ int main(void)
     //random behavior please
     srand((unsigned int)time(NULL));//this seeds with time for all other random calls
     //init window
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Boom Shocka!");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Boom Shocka FPS!");
     //audio
     InitAudioDevice();  // IMPORTANT: Must initialize audio!
     // Hide mouse and capture it
@@ -115,6 +119,8 @@ int main(void)
     gs.isMouseCaptured = true;
     //set quick fire to true, I found I like it much better
     gs.quickFire = true;
+    //set music to on
+    gs.playMusic = true;
     //screen and menu setup
     gs.screen = SCREEN_MENU;
     gs.menuCount = 3;
@@ -140,6 +146,9 @@ int main(void)
     gs.t_endLevel_wait.virgin = false;
     //game state sounds
     LoadGameStateSounds(&gs);
+    //play music
+    PlayMusicStream(gs.music);
+    SetMusicVolume(gs.music, 1.0f);
 
     #ifdef PLATFORM_WEB
         emscripten_set_main_loop(GameLoop, 0, 1);
@@ -153,6 +162,7 @@ int main(void)
     if(l.loaded){UnloadLevel(&l);}
     MemFree(gs.levels);
     UnloadGameStateSounds(&gs);
+    CloseAudioDevice();
     CloseWindow();
 
     #ifdef PLATFORM_WEB

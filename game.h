@@ -39,6 +39,7 @@ typedef struct {
     bool showBoxes;
     bool drawTri;
     bool quickFire;
+    bool playMusic;
     int menuSelection;
     int menuCount; // Play, Options, Exit
     int menuInGameSelection;
@@ -54,6 +55,7 @@ typedef struct {
     Sound selectSound;
     Sound enterSound;
     Sound playSound;
+    Music music;
 } GameState;
 
 //functions
