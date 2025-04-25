@@ -318,7 +318,7 @@ void HandleBgState(Level *l, MainCharacter *mc, Enemy *bg, int index)
             bg->anim = ANIM_YETI_WALK;  
         }
         bg->curFrame = 0;
-        if(los || bg->type==BG_TYPE_YETI){bg->yaw = GetYawToTarget(bg->pos,bg->targetPos);}
+        bg->yaw = GetYawToTarget(bg->pos,bg->targetPos);
         StartTimer(&bg->t_walk_stuck);
     }
     else if(bg->state == BG_STATE_WALKING)

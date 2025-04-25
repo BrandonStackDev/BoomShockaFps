@@ -693,6 +693,7 @@ void HandleBgPlatCollision(Enemy* bg, Level* l)
         Vector3 bounceDir = Vector3Normalize(Vector3Subtract(bg->oldPos, bg->pos));
         // New run target 2.5 units away from wall
         bg->targetPos = Vector3Add(bg->pos, Vector3Scale(bounceDir, 2.5f));
+        bg->yaw = GetYawToTarget(bg->pos,bg->targetPos);
     }
 
     bg->box = UpdateBoundingBox(bg->origBox,bg->pos);//one more time for good luck...
