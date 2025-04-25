@@ -120,6 +120,7 @@ If you are interested in GameDev and want to get into these tools:
     - freesound - (https://freesound.org) --good collection with commons license
     - Audacity - (https://www.audacityteam.org/) -- great free sound editor
     - Game Music - The music for the game is old stuff I used to write, and from FlannelKat, my band in college and highschool.
+        - FlannelKat Demo (Pink Lady) - https://www.youtube.com/watch?v=b8VIH7SIXAE (not in the game, but thought I would share)
 
 ## future enhancements, etc...
 
