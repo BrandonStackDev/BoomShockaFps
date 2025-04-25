@@ -76,7 +76,7 @@ In Menu controls,
     - Q is toggle Quick Fire (defaults to true)
         - quick fire enabled means you can fire as quickly as you want
         - disabled means you have to let the weapon recharge (timed to the sound effect of firing)
-    - P is toggle play music (will just mute it, so it actually keeps play)
+    - P is toggle play music (will just mute it, so it actually keeps playing)
 
 ## tools
 
