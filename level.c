@@ -182,14 +182,20 @@ Level LoadLevel(const char *filename)
     Texture2D platTexture = GetText("textures/wood1.png"); // Load texture
     Texture2D groundTexture = GetText("textures/grass1.png"); // Load texture
     Texture2D roofTexture = GetText("textures/roof.png"); // Load texture
+    Texture2D cFloorTexture = GetText("textures/castle_floor.png"); // Load texture
+    Texture2D cWallTexture = GetText("textures/castle_wall.png"); // Load texture
+    Texture2D cRoofTexture = GetText("textures/castle_roof.png"); // Load texture
     //store for cleanup
     printf("textures malloc\n");
-    level.uniqueTextures = 4;
+    level.uniqueTextures = 7;
     level.uTextures = MemAlloc(sizeof(Texture) * level.uniqueTextures);
     level.uTextures[0] = wallTexture;
     level.uTextures[1] = platTexture;
     level.uTextures[2] = groundTexture;
     level.uTextures[3] = roofTexture;
+    level.uTextures[4] = cFloorTexture;
+    level.uTextures[5] = cWallTexture;
+    level.uTextures[6] = cRoofTexture;
     //models
     printf("models\n");
     Model treeModel = LoadModel("models/tree.glb");
@@ -354,6 +360,14 @@ Level LoadLevel(const char *filename)
             objects[objCount].type = WORLDSPAWN_GROUND;
             objects[objCount].model = entities[i].model;
             objects[objCount].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = groundTexture;
+            if(entities[i].hasSubType)
+            {
+                printf("world spawn has subtype...\n");
+                if(strcmp(entities[i].subType,"castle")==0)
+                {
+                   objects[objCount].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = cFloorTexture;
+                }
+            }
             objCount++;
         }
         else if(strcmp(entities[i].className,"func_wall")==0)
@@ -362,6 +376,13 @@ Level LoadLevel(const char *filename)
             objects[objCount].pointEntity = false;
             objects[objCount].model = entities[i].model;
             objects[objCount].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
+            if(entities[i].hasSubType)
+            {
+                if(strcmp(entities[i].subType,"castle")==0)
+                {
+                   objects[objCount].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = cWallTexture;
+                }
+            }
             objCount++;
         }
         else if(strcmp(entities[i].className,"func_plat")==0)
@@ -537,6 +558,13 @@ Level LoadLevel(const char *filename)
             objects[objCount].pointEntity = false;
             objects[objCount].model = entities[i].model;
             objects[objCount].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = roofTexture;
+            if(entities[i].hasSubType)
+            {
+                if(strcmp(entities[i].subType,"castle")==0)
+                {
+                   objects[objCount].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = cRoofTexture;
+                }
+            }
             objCount++;
         }
         else

@@ -132,11 +132,12 @@ int main(void)
     gs.deathFadeColor = BLOODRED;
     gs.deathFadeColor.a = 0;
     //setup levels
-    gs.levelCount = 2;
+    gs.levelCount = 3;
     gs.levelSelection=  0;
     gs.levels = malloc(sizeof(MenuLevel) * gs.levelCount);
     gs.levels[0] = (MenuLevel){"Open Space","maps/test001.map"};
     gs.levels[1] = (MenuLevel){"The Maze","maps/test002.map"};
+    gs.levels[2] = (MenuLevel){"Dungeon","maps/dungeon.map"};
     //timers
     gs.t_crouch_wait = CreateTimer(0.0011f);
     gs.t_crouch_wait.virgin = false;

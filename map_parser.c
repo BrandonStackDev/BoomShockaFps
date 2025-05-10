@@ -377,6 +377,11 @@ Entity* LoadMapFile(const char *filename, int *modelCount) {
                 inBrush = true;
                 current.planeCount = 0;
             }
+            else if(entityDepth==1)
+            {
+                hasSubType = false;
+                strcpy(currentSubType,"none");
+            }
         } else if (strchr(line, '}')) {
             //TraceLog(LOG_INFO, "Close brace (depth %d)", entityDepth);
             if (inBrush && entityDepth == 2 && current.planeCount > 0)
@@ -385,13 +390,15 @@ Entity* LoadMapFile(const char *filename, int *modelCount) {
                 strcpy(current.className,currentClassName);
                 current.hasOrigin = hasOrigin;
                 if(hasOrigin){current.origin = currentOrigin;}
+                current.hasSubType = hasSubType;//subtype
+                if(hasSubType){strcpy(current.subType,currentSubType);}
                 brushes[brushCount++] = current;
                 inBrush = false;
             }
             else if(entityDepth == 1 && hasOrigin && hasClassName) //point entity
             {
                 current.hasOrigin = hasOrigin;
-                current.hasSubType = hasSubType;//subtypes only on point entities
+                current.hasSubType = hasSubType;//subtype
                 if(hasSubType){strcpy(current.subType,currentSubType);}
                 strcpy(current.className,currentClassName);
                 if(hasOrigin){current.origin = currentOrigin;}
